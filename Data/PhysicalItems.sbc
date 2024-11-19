@@ -1,0 +1,100 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <PhysicalItems>
+         <!-- Suit Powerbank -->
+         <PhysicalItem xsi:type="MyObjectBuilder_OxygenContainerDefinition">
+            <Id>
+                <TypeId>OxygenContainerObject</TypeId>
+                <SubtypeId>SuitPowerbank</SubtypeId>
+            </Id>
+            <DisplayName>Suit Powerbank</DisplayName>
+            <Icon>Textures\GUI\Icons\Item\SuitPowerbank.dds</Icon>
+            <Size>
+                <X>1.6</X>
+                <Y>0.48</Y>
+                <Z>0.16</Z>
+            </Size>
+            <Mass>30</Mass>
+            <Volume>130</Volume>
+            <Model>Models\Item\powerbank.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+            <StoredGasId>
+                <TypeId>GasProperties</TypeId>
+                <SubtypeId>Energy</SubtypeId>
+            </StoredGasId>
+            <Capacity>100</Capacity>
+         </PhysicalItem>
+         
+         <!--Enhanced Suit Powerbank -->
+         <PhysicalItem xsi:type="MyObjectBuilder_OxygenContainerDefinition">
+            <Id>
+                <TypeId>OxygenContainerObject</TypeId>
+                <SubtypeId>SuitPowerbank_1</SubtypeId>
+            </Id>
+            <DisplayName>Enhanced Suit Powerbank</DisplayName>
+            <Icon>Textures\GUI\Icons\Item\SuitPowerbank_1.dds</Icon>
+            <Size>
+                <X>1.6</X>
+                <Y>0.48</Y>
+                <Z>0.16</Z>
+            </Size>
+            <Mass>30</Mass>
+            <Volume>130</Volume>
+            <Model>Models\Item\powerbank.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+            <StoredGasId>
+                <TypeId>GasProperties</TypeId>
+                <SubtypeId>Energy</SubtypeId>
+            </StoredGasId>
+            <Capacity>200</Capacity>
+         </PhysicalItem> 
+
+         <!--Proficient Suit Powerbank -->
+         <PhysicalItem xsi:type="MyObjectBuilder_OxygenContainerDefinition">
+            <Id>
+                <TypeId>OxygenContainerObject</TypeId>
+                <SubtypeId>SuitPowerbank_2</SubtypeId>
+            </Id>
+            <DisplayName>Proficient Suit Powerbank</DisplayName>
+            <Icon>Textures\GUI\Icons\Item\SuitPowerbank_2.dds</Icon>
+            <Size>
+                <X>1.6</X>
+                <Y>0.48</Y>
+                <Z>0.16</Z>
+            </Size>
+            <Mass>30</Mass>
+            <Volume>130</Volume>
+            <Model>Models\Item\powerbank.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+            <StoredGasId>
+                <TypeId>GasProperties</TypeId>
+                <SubtypeId>Energy</SubtypeId>
+            </StoredGasId>
+            <Capacity>400</Capacity>
+         </PhysicalItem>  
+         
+         <!--Elite Suit Powerbank -->
+         <PhysicalItem xsi:type="MyObjectBuilder_OxygenContainerDefinition">
+            <Id>
+                <TypeId>OxygenContainerObject</TypeId>
+                <SubtypeId>SuitPowerbank_3</SubtypeId>
+            </Id>
+            <DisplayName>Elite Suit Powerbank</DisplayName>
+            <Icon>Textures\GUI\Icons\Item\SuitPowerbank_3.dds</Icon>
+            <Size>
+                <X>1.6</X>
+                <Y>0.48</Y>
+                <Z>0.16</Z>
+            </Size>
+            <Mass>30</Mass>
+            <Volume>130</Volume>
+            <Model>Models\Item\powerbank.mwm</Model>
+            <PhysicalMaterial>Metal</PhysicalMaterial>
+            <StoredGasId>
+                <TypeId>GasProperties</TypeId>
+                <SubtypeId>Energy</SubtypeId>
+            </StoredGasId>
+            <Capacity>800</Capacity>
+         </PhysicalItem>
+   </PhysicalItems>
+</Definitions>

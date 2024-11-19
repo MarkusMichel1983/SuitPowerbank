@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <EntityComponents>
+   <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+      <Id>
+        <TypeId>Inventory</TypeId>
+        <SubtypeId>SmallBlockPowerbankCharger</SubtypeId>
+      </Id>
+      <Size x="0.1" y="0.1" z="26.0" />
+      <InputConstraint Whitelist="true" Description="Place Powerbanks here" Icon="Textures\GUI\Icons\filter_powerbank.dds">
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank</SubtypeId>
+         </Entry>
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank_1</SubtypeId>
+         </Entry>
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank_2</SubtypeId>
+         </Entry>
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank_3</SubtypeId>
+         </Entry>
+      </InputConstraint>
+   </EntityComponent>
+   <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+      <Id>
+        <TypeId>Inventory</TypeId>
+        <SubtypeId>LargeBlockPowerbankCharger</SubtypeId>
+      </Id>
+      <Size x="0.1" y="0.1" z="78.0" />
+      <InputConstraint Whitelist="true" Description="Place Powerbanks here" Icon="Textures\GUI\Icons\filter_powerbank.dds">
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank</SubtypeId>
+         </Entry>
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank_1</SubtypeId>
+         </Entry>
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank_2</SubtypeId>
+         </Entry>
+         <Entry>
+            <TypeId>OxygenContainerObject</TypeId>
+            <SubtypeId>SuitPowerbank_3</SubtypeId>
+         </Entry>
+      </InputConstraint>
+    </EntityComponent>
+  </EntityComponents>
+</Definitions>

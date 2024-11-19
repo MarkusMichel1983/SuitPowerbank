@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Definitions> 
+   <Sounds>
+      <Sound>
+         <Id>
+             <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+             <SubtypeId>SuitPowerbankDepleted</SubtypeId>
+         </Id>
+         <Category>HUD</Category>
+         <Volume>0.5</Volume>
+         <Waves>
+             <Wave Type="D2">
+                <Start>Sounds/powerbank_depleted.wav</Start>
+             </Wave>
+             <Wave Type="D2">
+                <Start>Sounds/suit_powerbank_depleted.wav</Start>
+             </Wave>
+         </Waves>
+      </Sound>
+   </Sounds>
+</Definitions>
