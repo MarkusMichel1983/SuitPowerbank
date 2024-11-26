@@ -106,8 +106,9 @@ namespace SuitPowerbank
          }
       }
 
-      private bool HandlePowerbank(MyInventoryItem item, IMyCharacter character)
+      private bool HandlePowerbank(IMyInventoryItem item, IMyCharacter character)
       {
+         var inventory = character.GetInventory();
          var suitPowerbank = item.Content as MyObjectBuilder_GasContainerObject;
          if (suitPowerbank != null)
          {
