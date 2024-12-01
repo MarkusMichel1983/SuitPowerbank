@@ -8,13 +8,13 @@
                 <SubtypeId>LargeBlockPowerbankCharger</SubtypeId>
             </Id>
             <DisplayName>Suit Powerbank Charger</DisplayName>
-            <Icon>Textures\GUI\Icons\Cubes\Powerbank_Charger.dds</Icon>
+            <Icon>Textures\GUI\Icons\Cubes\Powerbank_ChargingStation.dds</Icon>
             <Description>Store empty suit powerbanks in this device for recharging</Description>
             <CubeSize>Large</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="1" z="1" />
-            <Model>Models\Cubes\Large\WeaponRack.mwm</Model>
+            <Model>Models\Cubes\Large\PowerbankCharger_Large.mwm</Model>
             <ModelOffset x="0" y="0" z="0" />
             <Components>
                <Component Subtype="InteriorPlate" Count="20" />
@@ -28,16 +28,15 @@
             </Components>
             <CriticalComponent Subtype="Computer" Index="0" />
             <MountPoints>
-                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="0.2" Default="true" />
-                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.2" EndY="1" />
-                <MountPoint Side="Right" StartX="0.8" StartY="0" EndX="1" EndY="1" />
-                <MountPoint Side="Front" StartX="0" StartY="0" EndX="1" EndY="1" />
-                <MountPoint Side="Top" StartX="0" StartY="0.8" EndX="1" EndY="1" />
+				<MountPoint Side="Back" StartX="0.00" StartY="0.00" EndX="1.00" EndY="1.00"/>
+				<MountPoint Side="Left" StartX="0.00" StartY="0.00" EndX="1.00" EndY="1.00"/>
+				<MountPoint Side="Right" StartX="0.00" StartY="0.00" EndX="1.00" EndY="1.00"/>
+				<MountPoint Side="Top" StartX="0.00" StartY="0.00" EndX="1.00" EndY="1.00"/>
+				<MountPoint Side="Bottom" StartX="0.00" StartY="0.00" EndX="1.00" EndY="1.00"/>
             </MountPoints>
             <BuildProgressModels>
-                <Model BuildPercentUpperBound="0.33" File="Models\Cubes\Large\WeaponRackConstruction_1.mwm" />
-                <Model BuildPercentUpperBound="0.66" File="Models\Cubes\Large\WeaponRackConstruction_2.mwm" />
-                <Model BuildPercentUpperBound="1.00" File="Models\Cubes\Large\WeaponRackConstruction_3.mwm" />
+                <Model BuildPercentUpperBound="0.5" File="Models\Cubes\Large\PowerbankCharger_Large_BS1.mwm" />
+                <Model BuildPercentUpperBound="1.0" File="Models\Cubes\Large\PowerbankCharger_Large_BS2.mwm" />
             </BuildProgressModels>
             <BlockPairName>PowerbankCharger</BlockPairName>
             <MirroringY>Z</MirroringY>
@@ -56,7 +55,7 @@
                 <SubtypeId>SmallBlockPowerbankCharger</SubtypeId>
             </Id>
             <DisplayName>Suit Powerbank Charger</DisplayName>
-            <Icon>Textures\GUI\Icons\Cubes\Powerbank_Charger.dds</Icon>
+            <Icon>Textures\GUI\Icons\Cubes\Powerbank_ChargingStation.dds</Icon>
             <Description>Store empty suit powerbanks in this device for recharging</Description>
             <CubeSize>Small</CubeSize>
             <GuiVisible>false</GuiVisible>

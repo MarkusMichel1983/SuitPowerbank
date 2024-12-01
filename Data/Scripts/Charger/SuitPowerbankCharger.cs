@@ -71,12 +71,12 @@ namespace SuitPowerbank.Charger
                      }
                         
 
-                     MyOxygenContainerDefinition physicalItem = MyDefinitionManager.Static.GetPhysicalItemDefinition((MyObjectBuilder_Base) powerbankCell) as MyOxygenContainerDefinition;
+/*                      MyOxygenContainerDefinition physicalItem = MyDefinitionManager.Static.GetPhysicalItemDefinition((MyObjectBuilder_Base) powerbankCell) as MyOxygenContainerDefinition;
                      if (physicalItem != null)
                      {
                         //Log.WriteLine($"[SuitPowerbank.Item] Injecting Energy ID into Item in order to prevent content being used as oxygen");
                         physicalItem.StoredGasId = EnergyId;
-                     }
+                     } */
 
                      float previousGasLevel = powerbankCell.GasLevel;
                      powerbankCell.GasLevel += 0.05f;

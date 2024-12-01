@@ -94,13 +94,13 @@ namespace SuitPowerbank
             var items = inventory.GetItems().Where(itm => itm.Content.SubtypeName.Contains("SuitPowerbank"));
             foreach (var item in items) 
             {
-               if (HandlePowerbank(item, character))
+               if (!HandlePowerbank(item, character))
                {
-
+                  continue;
                }
                else
                {
-                  continue;
+                  return;
                }
             }
          }
