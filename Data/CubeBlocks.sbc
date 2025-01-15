@@ -55,13 +55,13 @@
                 <SubtypeId>SmallBlockPowerbankCharger</SubtypeId>
             </Id>
             <DisplayName>Suit Powerbank Charger</DisplayName>
-            <Icon>Textures\GUI\Icons\Cubes\Powerbank_ChargingStation.dds</Icon>
+            <Icon>Textures\GUI\Icons\Cubes\Powerbank_ChargingStation_Small.dds</Icon>
             <Description>Store empty suit powerbanks in this device for recharging</Description>
             <CubeSize>Small</CubeSize>
             <GuiVisible>false</GuiVisible>
             <BlockTopology>TriangleMesh</BlockTopology>
             <Size x="1" y="2" z="1" />
-            <Model>Models\Cubes\Small\WeaponRack.mwm</Model>
+            <Model>Models\Cubes\Small\PowerbankCharger_Small.mwm</Model>
             <ModelOffset x="0" y="0" z="0" />
             <Components>
                <Component Subtype="InteriorPlate" Count="2" />

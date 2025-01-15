@@ -7,7 +7,7 @@
              <SubtypeId>SuitPowerbankDepleted</SubtypeId>
          </Id>
          <Category>HUD</Category>
-         <Volume>0.3</Volume>
+         <Volume>0.2</Volume>
          <Waves>
              <Wave Type="D2">
                 <Start>Sounds/powerbank_depleted.wav</Start>
