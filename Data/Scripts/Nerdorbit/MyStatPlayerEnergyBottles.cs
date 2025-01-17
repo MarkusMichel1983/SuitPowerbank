@@ -1,0 +1,119 @@
+using System.Linq;
+using Sandbox.Game.Components;
+using Sandbox.Game.Entities;
+using Sandbox.ModAPI;
+using VRage.ModAPI;
+using VRage.Utils;
+using VRage.Library.Utils;
+using VRage.Game.ModAPI;
+
+using Sandbox.Common.ObjectBuilders;
+using Sandbox.Common.ObjectBuilders.Definitions;
+
+namespace Nerdorbit.SuitPowerbank
+{
+    public class MyStatPlayerEnergyBottles : IMyHudStat
+    {
+        private static readonly double CHECK_INTERVAL_MS = 1000.0;
+        private static readonly MyGameTimer TIMER = new MyGameTimer();
+        private double m_lastCheck;
+
+        private float m_currentValue;
+        private string m_valueStringCache;
+
+        public MyStringHash Id { get; protected set; }
+
+        public float CurrentValue
+        {
+            get { return m_currentValue; }
+            protected set
+            {
+                if (m_currentValue == value)
+                {
+                    return;
+                }
+                m_currentValue = value;
+                m_valueStringCache = null;
+            }
+        }
+
+        public virtual float MaxValue => 100.0f;
+        public virtual float MinValue => 0.0f;
+
+        public string GetValueString()
+        {
+            if (m_valueStringCache == null)
+            {
+                m_valueStringCache = ToString();
+            }
+            return m_valueStringCache;
+        }
+
+        public MyStatPlayerEnergyBottles()
+        {
+            this.Id = MyStringHash.GetOrCompute("player_energy_bottles");
+            this.m_lastCheck = 0.0;
+        }
+
+        public void Update()
+        {
+            if (MyStatPlayerEnergyBottles.TIMER.ElapsedTimeSpan.TotalMilliseconds - MyStatPlayerEnergyBottles.CHECK_INTERVAL_MS < this.m_lastCheck)
+                return;
+            this.m_lastCheck = MyStatPlayerEnergyBottles.TIMER.ElapsedTimeSpan.TotalMilliseconds;
+            IMyCharacter localCharacter = MyAPIGateway.Session.LocalHumanPlayer.Character;
+            if (localCharacter == null)
+            {
+                this.CurrentValue = 0.0f;
+            }
+            else
+            {
+                IMyInventory inventory = localCharacter.GetInventory();
+                if (inventory == null)
+                {
+                    this.CurrentValue = 0.0f;
+                }
+                else
+                {
+                    this.CurrentValue = 0.0f;
+                    foreach (var inventoryItem in inventory.GetItems().Where(
+                        itm => itm.Content.SubtypeName.Contains("SuitPowerbank") &&
+                        CanHandlePowerbank(itm)
+                        ))
+                    {
+                        // Multiply with 100 to make it work with the HUD
+                        this.CurrentValue += (float) ((int) inventoryItem.Amount)*100;
+                    }
+                }
+            }
+        }
+
+        private bool CanHandlePowerbank(IMyInventoryItem item)
+        {
+            var suitPowerbank = item.Content as MyObjectBuilder_GasContainerObject;
+            if (suitPowerbank != null)
+            {
+                float fillAmount = GetFillAmountForPowerbank(item);
+                return suitPowerbank.GasLevel >= fillAmount;
+            }
+            return false;
+        }
+
+        private float GetFillAmountForPowerbank(IMyInventoryItem item)
+        {
+            switch(item.Content.SubtypeName)
+            {
+            case "SuitPowerbank": 
+                return 1.0f;
+            case "SuitPowerbank_1":
+                return 0.5f;
+            case "SuitPowerbank_2":
+                return 0.33f;
+            case "SuitPowerbank_3":
+                return 0.25f;
+            default: 
+                return 1.0f;
+            }
+        }
+        public override string ToString() => string.Format("{0:0.00}", (float)(CurrentValue));
+    }
+}

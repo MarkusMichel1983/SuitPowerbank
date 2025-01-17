@@ -5,6 +5,7 @@ using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Definitions;
 using Sandbox.Game;
+using Sandbox.Game.Components;
 using Sandbox.Game.Entities;
 using Sandbox.Game.Entities.Cube;
 using Sandbox.ModAPI;
@@ -16,23 +17,33 @@ using VRage.Game.Entity;
 using VRage.Utils; 
 using VRageMath;
 
-namespace SuitPowerbank
+namespace Nerdorbit.SuitPowerbank
 {
+   public struct CharacterStats
+   {
+      public long playerId;
+		public IMyCharacter character;
+      public MyEntityStat energyBottles;
+   }
+
    [MySessionComponentDescriptor(MyUpdateOrder.AfterSimulation)]
    public class Session : MySessionComponentBase
    {
-      public Session Instance;
+      public NetworkProtobuf Networking = new NetworkProtobuf(17278);// mod id: 3365172783
+      public static Session Instance;
       private bool isServer;
       private static int skippedTicks = 0;
       private static readonly MyLog Log = MyLog.Default;
-      //private MyEntity3DSoundEmitter soundEmitter;
-      private MySoundPair soundPair;
       List<IMyPlayer> players;
+      private static List<CharacterStats> charactersStats = new List<CharacterStats>();
       
+      public override void BeforeStart()
+      {
+         Networking.Register();
+      }
+
       public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
       {
-         
-         //Log.WriteLine("[SuitPowerbank.Item] Init");
          isServer = MyAPIGateway.Multiplayer.IsServer;
 			if (!isServer)
 			{
@@ -40,13 +51,15 @@ namespace SuitPowerbank
 			}
          Instance = this;
          players = new List<IMyPlayer>();
-         soundPair = new MySoundPair("SuitPowerbankDepleted");
+         skippedTicks = 100;
+         UpdateAfterSimulation();
       }
       
       protected override void UnloadData()
       {
          // executed when world is exited to unregister events and stuff
-
+         Networking?.Unregister();
+         Networking = null;
          Instance = null; // important for avoiding this object to remain allocated in memory
       }
      
@@ -56,7 +69,7 @@ namespace SuitPowerbank
 			{
 				return;
 			}
-			if (skippedTicks++ <= 100)
+			if (skippedTicks++ < 100)
 			{
 				return;
 			}
@@ -66,59 +79,117 @@ namespace SuitPowerbank
             
             if (players != null)
             {
-               int sessionPlayerCount = (int)MyAPIGateway.Players.Count;
+               int sessionPlayerCount = (int)MyAPIGateway.Players?.Count;
                if (sessionPlayerCount != (int)players.Count)
                {
                   Log.WriteLine($"[SuitPowerbank.Session] currently has {(players != null ? players.Count : 0 )} players registered but {sessionPlayerCount} are in the session");
-                  MyAPIGateway.Players.GetPlayers(players, p => !p.IsBot && p.Character != null);
+                  players.Clear();
+                  charactersStats.Clear();
+                  MyAPIGateway.Players?.GetPlayers(players, p => !p.IsBot && p.Character != null);
                }
                Log.WriteLine($"[SuitPowerbank.Session] currently has {(players != null ? players.Count : 0 )} players registered ");
+               if (players.Count == 0)
+               {
+                  return;
+               }
                foreach (var player in players)
                {
+                  MyEntityStatComponent statComp = player.Character?.Components?.Get<MyEntityStatComponent>();
+                  
+                  if (statComp == null)
+                  {
+                     Log.WriteLine("[SuitPowerbank.Session] StatComp is null");
+                     continue;
+                  }
+                  MyEntityStat energyBottles;
+                  statComp.TryGetStat(MyStringHash.GetOrCompute("EnergyBottles"), out energyBottles);
+                  charactersStats.Add(new CharacterStats
+                  {
+                     playerId = player.IdentityId,
+                     character = player.Character,
+                     energyBottles = energyBottles
+                  });
+
                   Log.WriteLine($"[SuitPowerbank.Session] Checking player {player.DisplayName}");
-                  CheckAndUpdatePlayer(player.Character);
+                  CheckAndUpdatePlayer(player);
                }
             }
 			}
 		}
+
+      private float GetActivePowerbankCount(IMyPlayer player)
+      {
+         if (player.Character.IsDead)
+         {
+            return 0;
+         }
+         var inventory = player.Character.GetInventory();
+         if (inventory != null)
+         {
+            var items = inventory.GetItems().Where(
+               itm => itm.Content.SubtypeName.Contains("SuitPowerbank") &&
+               CanHandlePowerbank(itm)
+               );
+            float pbCount = 0;
+            foreach (var item in items)
+            {
+               pbCount += (float) (int) item.Amount;
+            }
+            Log.WriteLine($"[SuitPowerbank.Session] {player.DisplayName} has {pbCount} active powerbanks");
+            return pbCount;
+         }
+         return 0;
+      }
       
-      private void CheckAndUpdatePlayer(IMyCharacter character)
+      private void CheckAndUpdatePlayer(IMyPlayer player)
       {           
-         var playerid = character.ControllerInfo.ControllingIdentityId;
-         if (character.IsDead)
+         var playerid = player.Character.ControllerInfo.ControllingIdentityId;
+         if (player.Character.IsDead)
             return;
          var elevel = MyVisualScriptLogicProvider.GetPlayersEnergyLevel(playerid);
-         var inventory = character.GetInventory();
+         var inventory = player.Character.GetInventory();
          if (inventory != null && elevel <= 0.05)
          {
             var items = inventory.GetItems().Where(itm => itm.Content.SubtypeName.Contains("SuitPowerbank"));
             foreach (var item in items) 
             {
-               if (!HandlePowerbank(item, character))
+               if (!CanHandlePowerbank(item))
                {
                   continue;
                }
                else
                {
+                  HandlePowerbank(item, player);
+                  Networking.SendToPlayer(new UpdatePlayerChargePacket(playerid), player.SteamUserId);
                   return;
                }
             }
          }
       }
 
-      private bool HandlePowerbank(IMyInventoryItem item, IMyCharacter character)
+      private bool CanHandlePowerbank(IMyInventoryItem item)
       {
-         var inventory = character.GetInventory();
          var suitPowerbank = item.Content as MyObjectBuilder_GasContainerObject;
          if (suitPowerbank != null)
          {
-            //Log.WriteLine($"[SuitPowerbank.Session] Using suitPowerbank {item.Content.SubtypeName}");
+            float fillAmount = GetFillAmountForPowerbank(item);
+            return suitPowerbank.GasLevel >= fillAmount;
+         }
+         return false;
+      }
+
+      
+
+      private void HandlePowerbank(IMyInventoryItem item, IMyPlayer player)
+      {
+         var inventory = player.Character.GetInventory();
+         var suitPowerbank = item.Content as MyObjectBuilder_GasContainerObject;
+         if (suitPowerbank != null)
+         {
             float fillAmount = GetFillAmountForPowerbank(item);
             if (suitPowerbank.GasLevel >= fillAmount)
             {
-               //Log.WriteLine($"[SuitPowerbank.Session] {item.Content.SubtypeName} Has enough Gas to fill: {suitPowerbank.GasLevel}");
-               //Log.WriteLine($"[SuitPowerbank.Session] Item Amount is: {item.Amount}");
-               MyVisualScriptLogicProvider.SetPlayersEnergyLevel(character.ControllerInfo.ControllingIdentityId,1);
+               MyVisualScriptLogicProvider.SetPlayersEnergyLevel(player.Character.ControllerInfo.ControllingIdentityId,1);
                
                // Item is part of a stack
                if (item.Amount > 1)
@@ -139,39 +210,24 @@ namespace SuitPowerbank
                {
                   suitPowerbank.GasLevel -= fillAmount;
                }
-               //Log.WriteLine("[SuitPowerbank.Session] {item.Content.SubtypeName} gas remaining: " + suitPowerbank.GasLevel);
-               CheckIfDepleted(character, suitPowerbank);
-               return true;
+               CheckIfDepleted(player, suitPowerbank);
             }
          }
-         return false;
       }
             
-      private void CheckIfDepleted(IMyCharacter player, MyObjectBuilder_GasContainerObject powerbank)
+      private void CheckIfDepleted(IMyPlayer player, MyObjectBuilder_GasContainerObject powerbank)
       {
          if (powerbank.GasLevel <= 0.01f)
          {                       
             powerbank.GasLevel = 0.0f;
             
-            var playerInv = player.GetInventory();
+            var playerInv = player.Character.GetInventory();
             if (playerInv != null)
             {
                playerInv.TransferItemTo(playerInv, 0,0);
             }
-            if (IsLocalPlayer(player))
-            {
-               MyAPIGateway.Utilities.ShowNotification("Powerbank depleted", 2000, MyFontEnum.Green);
-               MyEntity3DSoundEmitter soundEmitter = new MyEntity3DSoundEmitter(MyAPIGateway.Session.LocalHumanPlayer.Controller.ControlledEntity as MyEntity);
-               soundEmitter.CustomVolume = 0.7f;
-               soundEmitter.PlaySound(soundPair);
-            }
+            Networking.SendToPlayer(new NotifyPowerbankDepletedPacket(player.Character.ControllerInfo.ControllingIdentityId), player.SteamUserId);
          }
-      }
-
-      private bool IsLocalPlayer(IMyCharacter character)
-      {
-         var localPlayer = MyAPIGateway.Session?.Player?.Character;
-         return localPlayer != null && localPlayer.EntityId == character.EntityId;
       }
       
       private float GetFillAmountForPowerbank(IMyInventoryItem item)

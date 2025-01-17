@@ -16,7 +16,7 @@ using VRage.Game.Entity;
 using VRage.Utils; 
 using VRageMath;
 
-namespace SuitPowerbank.Charger
+namespace Nerdorbit.SuitPowerbank
 {
    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_CargoContainer), false, "SmallBlockPowerbankCharger", "LargeBlockPowerbankCharger")]
    public class SuitPowerbankCharger : MyGameLogicComponent
@@ -24,6 +24,12 @@ namespace SuitPowerbank.Charger
       public static readonly MyDefinitionId EnergyId = new MyDefinitionId((MyObjectBuilderType) typeof (VRage.Game.ObjectBuilders.Definitions.MyObjectBuilder_GasProperties), "Energy");
       Sandbox.ModAPI.IMyCargoContainer charger;
       private static readonly MyLog Log = MyLog.Default;
+
+      private const string EMISSIVE_MATERIAL_NAME = "Loading_Screen_CM";
+      private Color GREEN = new Color(0, 255, 0);
+      private Color LIGHTBLUE = new Color(0, 255, 255, 255);
+      private Color RED = new Color(255, 0, 0);
+      private Color WHITE = new Color(255, 255, 255);
       
       public override void Init(MyObjectBuilder_EntityBase objectBuilder)
       {
@@ -31,10 +37,13 @@ namespace SuitPowerbank.Charger
          if (Entity is Sandbox.ModAPI.IMyCargoContainer)
          {
             charger = Entity as Sandbox.ModAPI.IMyCargoContainer;
+            charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, GREEN, 1f);
+            charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, GREEN, 1f);
          }
          
          //Log.WriteLine("[SuitPowerbank] was found");
          NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
+         base.Init(objectBuilder);
       }
         
       public override void UpdateAfterSimulation100()
@@ -46,9 +55,11 @@ namespace SuitPowerbank.Charger
             //Log.WriteLine("[SuitPowerbank] Charger is null");
             return;
          }
+         
          if(charger?.CubeGrid?.Physics == null || CheckIfGridIsPowered(charger?.CubeGrid) == false) 
          {
             //Log.WriteLine("[SuitPowerbank] Grid is not powered");
+
             return;
          }
          if (charger != null)
@@ -69,14 +80,6 @@ namespace SuitPowerbank.Charger
                         // those are not the powerbanks we're looking for
                         continue;
                      }
-                        
-
-/*                      MyOxygenContainerDefinition physicalItem = MyDefinitionManager.Static.GetPhysicalItemDefinition((MyObjectBuilder_Base) powerbankCell) as MyOxygenContainerDefinition;
-                     if (physicalItem != null)
-                     {
-                        //Log.WriteLine($"[SuitPowerbank.Item] Injecting Energy ID into Item in order to prevent content being used as oxygen");
-                        physicalItem.StoredGasId = EnergyId;
-                     } */
 
                      float previousGasLevel = powerbankCell.GasLevel;
                      powerbankCell.GasLevel += 0.05f;
@@ -113,10 +116,12 @@ namespace SuitPowerbank.Charger
             if (powerProducer != null && powerProducer.Enabled && powerProducer.IsWorking) 
             {
                //Log.WriteLine("[SuitPowerbank] Grid is powered");
+               charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, GREEN, 1f);
                return true; 
             } 
          }
          //Log.WriteLine("[SuitPowerbank] Grid is NOT powered");
+         charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, RED, 1f);
          return false;
       }
    
