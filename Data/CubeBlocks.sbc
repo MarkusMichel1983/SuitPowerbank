@@ -82,8 +82,8 @@
                 <MountPoint Side="Top" StartX="0" StartY="0.8" EndX="1" EndY="1" />
             </MountPoints>
             <BuildProgressModels>
-                <Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\WeaponRackConstruction_1.mwm" />
-                <Model BuildPercentUpperBound="1" File="Models\Cubes\Small\WeaponRackConstruction_2.mwm" />
+                <Model BuildPercentUpperBound="0.5" File="Models\Cubes\Small\PowerbankCharger_Small_BS1.mwm" />
+                <Model BuildPercentUpperBound="1" File="Models\Cubes\Small\PowerbankCharger_Small_BS2.mwm" />
             </BuildProgressModels>
             <BlockPairName>PowerbankCharger</BlockPairName>
             <MirroringY>Z</MirroringY>

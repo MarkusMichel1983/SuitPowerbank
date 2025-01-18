@@ -25,20 +25,20 @@ namespace Nerdorbit.SuitPowerbank
       Sandbox.ModAPI.IMyCargoContainer charger;
       private static readonly MyLog Log = MyLog.Default;
 
-      private const string EMISSIVE_MATERIAL_NAME = "Loading_Screen_CM";
+      private const string EMISSIVE_MATERIAL_NAME = "Emissive";
       private Color GREEN = new Color(0, 255, 0);
       private Color LIGHTBLUE = new Color(0, 255, 255, 255);
       private Color RED = new Color(255, 0, 0);
       private Color WHITE = new Color(255, 255, 255);
+      private bool isCharging = false;
       
       public override void Init(MyObjectBuilder_EntityBase objectBuilder)
       {
-         //Log.WriteLine("[SuitPowerbank] Init");
          if (Entity is Sandbox.ModAPI.IMyCargoContainer)
          {
             charger = Entity as Sandbox.ModAPI.IMyCargoContainer;
-            charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, GREEN, 1f);
-            charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, GREEN, 1f);
+            //charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, WHITE, 1f);
+            charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, WHITE, 0.75f);
          }
          
          //Log.WriteLine("[SuitPowerbank] was found");
@@ -69,6 +69,7 @@ namespace Nerdorbit.SuitPowerbank
             if (inv != null)
             {
                var items = inv.GetItems();
+               isCharging = CheckIfChargeableItems(items);
                //Log.WriteLine($"[SuitPowerbank] Items in inventory {items.Count()}");
                if (items != null && items.Count() > 0)
                {
@@ -98,6 +99,11 @@ namespace Nerdorbit.SuitPowerbank
             }
          }
       }
+
+      private bool CheckIfChargeableItems(List<IMyInventoryItem> items)
+      {
+         return items.Any(item => item.Content.SubtypeName.Contains("SuitPowerbank") && (item.Content as MyObjectBuilder_GasContainerObject).GasLevel < 1.0f);
+      }
       
       private bool CheckIfGridIsPowered(IMyCubeGrid cubeGrid)
       {
@@ -115,13 +121,11 @@ namespace Nerdorbit.SuitPowerbank
             Sandbox.ModAPI.IMyPowerProducer powerProducer = block.FatBlock as Sandbox.ModAPI.IMyPowerProducer;
             if (powerProducer != null && powerProducer.Enabled && powerProducer.IsWorking) 
             {
-               //Log.WriteLine("[SuitPowerbank] Grid is powered");
-               charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, GREEN, 1f);
+               charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, (isCharging ? LIGHTBLUE : GREEN), 0.75f);
                return true; 
             } 
          }
-         //Log.WriteLine("[SuitPowerbank] Grid is NOT powered");
-         charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, RED, 1f);
+         charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, RED, 0.75f);
          return false;
       }
    

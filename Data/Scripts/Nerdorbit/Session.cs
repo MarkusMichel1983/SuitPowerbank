@@ -51,8 +51,7 @@ namespace Nerdorbit.SuitPowerbank
 			}
          Instance = this;
          players = new List<IMyPlayer>();
-         skippedTicks = 100;
-         UpdateAfterSimulation();
+         UpdateAfterSimulation100();
       }
       
       protected override void UnloadData()
@@ -62,59 +61,56 @@ namespace Nerdorbit.SuitPowerbank
          Networking = null;
          Instance = null; // important for avoiding this object to remain allocated in memory
       }
-     
+
       public override void UpdateAfterSimulation()
 		{
 			if (!isServer)
 			{
 				return;
 			}
-			if (skippedTicks++ < 100)
+			if (skippedTicks++ > 100)
 			{
-				return;
+            skippedTicks = 0;
+				UpdateAfterSimulation100();
 			}
-			else
-			{
-				skippedTicks = 0;
-            
-            if (players != null)
-            {
-               int sessionPlayerCount = (int)MyAPIGateway.Players?.Count;
-               if (sessionPlayerCount != (int)players.Count)
-               {
-                  Log.WriteLine($"[SuitPowerbank.Session] currently has {(players != null ? players.Count : 0 )} players registered but {sessionPlayerCount} are in the session");
-                  players.Clear();
-                  charactersStats.Clear();
-                  MyAPIGateway.Players?.GetPlayers(players, p => !p.IsBot && p.Character != null);
-               }
-               Log.WriteLine($"[SuitPowerbank.Session] currently has {(players != null ? players.Count : 0 )} players registered ");
-               if (players.Count == 0)
-               {
-                  return;
-               }
-               foreach (var player in players)
-               {
-                  MyEntityStatComponent statComp = player.Character?.Components?.Get<MyEntityStatComponent>();
-                  
-                  if (statComp == null)
-                  {
-                     Log.WriteLine("[SuitPowerbank.Session] StatComp is null");
-                     continue;
-                  }
-                  MyEntityStat energyBottles;
-                  statComp.TryGetStat(MyStringHash.GetOrCompute("EnergyBottles"), out energyBottles);
-                  charactersStats.Add(new CharacterStats
-                  {
-                     playerId = player.IdentityId,
-                     character = player.Character,
-                     energyBottles = energyBottles
-                  });
+		}
+     
+      public void UpdateAfterSimulation100()
+		{      
+         players.Clear();
+         charactersStats.Clear();
+         MyAPIGateway.Players?.GetPlayers(players);   
+         if (players != null)
+         {
+            Log.WriteLine($"[SuitPowerbank.Session] currently has {(players != null ? players.Count : 0 )} players registered ");
 
-                  Log.WriteLine($"[SuitPowerbank.Session] Checking player {player.DisplayName}");
-                  CheckAndUpdatePlayer(player);
+            foreach (var player in players)
+            {
+               if (player.IsBot || player.Character == null || player.Character.IsDead)
+               {
+                  Log.WriteLine($"[SuitPowerbank.Session] Skipping player {player.DisplayName} because it's a bot or dead");
+                  continue;
                }
+               MyEntityStatComponent statComp = player.Character?.Components?.Get<MyEntityStatComponent>();
+               if (statComp == null)
+               {
+                  Log.WriteLine("[SuitPowerbank.Session] StatComp is null");
+                  continue;
+               }
+               MyEntityStat energyBottles;
+               statComp.TryGetStat(MyStringHash.GetOrCompute("EnergyBottles"), out energyBottles);
+
+               charactersStats.Add(new CharacterStats
+               {
+                  playerId = player.IdentityId,
+                  character = player.Character,
+                  energyBottles = energyBottles
+               });
+
+               Log.WriteLine($"[SuitPowerbank.Session] Checking player {player.DisplayName}");
+               CheckAndUpdatePlayer(player);
             }
-			}
+         }
 		}
 
       private float GetActivePowerbankCount(IMyPlayer player)

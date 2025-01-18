@@ -16,12 +16,13 @@ namespace Nerdorbit.SuitPowerbank
     {
         private static readonly double CHECK_INTERVAL_MS = 1000.0;
         private static readonly MyGameTimer TIMER = new MyGameTimer();
-        private double m_lastCheck;
+        private double m_lastCheck = 0.0;
 
         private float m_currentValue;
         private string m_valueStringCache;
 
         public MyStringHash Id { get; protected set; }
+        private static readonly MyLog Log = MyLog.Default;
 
         public float CurrentValue
         {
@@ -60,19 +61,17 @@ namespace Nerdorbit.SuitPowerbank
             if (MyStatPlayerEnergyBottles.TIMER.ElapsedTimeSpan.TotalMilliseconds - MyStatPlayerEnergyBottles.CHECK_INTERVAL_MS < this.m_lastCheck)
                 return;
             this.m_lastCheck = MyStatPlayerEnergyBottles.TIMER.ElapsedTimeSpan.TotalMilliseconds;
-            IMyCharacter localCharacter = MyAPIGateway.Session.LocalHumanPlayer.Character;
-            if (localCharacter == null)
+            IMyCharacter localCharacter = MyAPIGateway.Session.Player?.Character;
+            if (localCharacter != null && !localCharacter.IsDead)
             {
-                this.CurrentValue = 0.0f;
-            }
-            else
-            {
-                IMyInventory inventory = localCharacter.GetInventory();
-                if (inventory == null)
+                MyEntityStatComponent statComp = localCharacter.Components.Get<MyEntityStatComponent>();
+
+                if (statComp == null)
                 {
-                    this.CurrentValue = 0.0f;
+                    return;
                 }
-                else
+                IMyInventory inventory = localCharacter.GetInventory();
+                if (inventory != null)
                 {
                     this.CurrentValue = 0.0f;
                     foreach (var inventoryItem in inventory.GetItems().Where(
@@ -84,6 +83,9 @@ namespace Nerdorbit.SuitPowerbank
                         this.CurrentValue += (float) ((int) inventoryItem.Amount)*100;
                     }
                 }
+            } else
+            {
+                this.CurrentValue = 0.0f;
             }
         }
 
