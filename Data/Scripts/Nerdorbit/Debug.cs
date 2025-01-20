@@ -6,7 +6,7 @@ namespace Nerdorbit.SuitPowerbank
 {
     static class Debug
     {
-        private static bool useDebug = true;
+        private static bool useDebug = Config.suitPowerbankConfig.DEBUG;
         public static void Log(string sender = "[SuitPowerbank]", object message = null, bool informUser = false)
         {
             if (!useDebug) return;

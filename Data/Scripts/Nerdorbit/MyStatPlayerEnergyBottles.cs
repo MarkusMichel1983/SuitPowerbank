@@ -76,7 +76,7 @@ namespace Nerdorbit.SuitPowerbank
                     this.CurrentValue = 0.0f;
                     foreach (var inventoryItem in inventory.GetItems().Where(
                         itm => itm.Content.SubtypeName.Contains("SuitPowerbank") &&
-                        CanHandlePowerbank(itm)
+                        PowerbankUtils.CanHandlePowerbank(itm)
                         ))
                     {
                         // Multiply with 100 to make it work with the HUD
@@ -86,34 +86,6 @@ namespace Nerdorbit.SuitPowerbank
             } else
             {
                 this.CurrentValue = 0.0f;
-            }
-        }
-
-        private bool CanHandlePowerbank(IMyInventoryItem item)
-        {
-            var suitPowerbank = item.Content as MyObjectBuilder_GasContainerObject;
-            if (suitPowerbank != null)
-            {
-                float fillAmount = GetFillAmountForPowerbank(item);
-                return suitPowerbank.GasLevel >= fillAmount;
-            }
-            return false;
-        }
-
-        private float GetFillAmountForPowerbank(IMyInventoryItem item)
-        {
-            switch(item.Content.SubtypeName)
-            {
-            case "SuitPowerbank": 
-                return 1.0f;
-            case "SuitPowerbank_1":
-                return 0.5f;
-            case "SuitPowerbank_2":
-                return 0.33f;
-            case "SuitPowerbank_3":
-                return 0.25f;
-            default: 
-                return 1.0f;
             }
         }
         public override string ToString() => string.Format("{0:0.00}", (float)(CurrentValue));

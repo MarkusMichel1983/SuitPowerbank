@@ -37,42 +37,35 @@ namespace Nerdorbit.SuitPowerbank
          if (Entity is Sandbox.ModAPI.IMyCargoContainer)
          {
             charger = Entity as Sandbox.ModAPI.IMyCargoContainer;
-            //charger?.SetEmissivePartsForSubparts(EMISSIVE_MATERIAL_NAME, WHITE, 1f);
             charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, WHITE, 0.75f);
          }
-         
-         //Log.WriteLine("[SuitPowerbank] was found");
          NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
          base.Init(objectBuilder);
       }
         
       public override void UpdateAfterSimulation100()
       {
-         //Log.WriteLine("[SuitPowerbank] UpdateAfterSimulation100");
          base.UpdateAfterSimulation100();
          if (charger == null)
          {
-            //Log.WriteLine("[SuitPowerbank] Charger is null");
             return;
          }
          
          if(charger?.CubeGrid?.Physics == null || CheckIfGridIsPowered(charger?.CubeGrid) == false) 
          {
-            //Log.WriteLine("[SuitPowerbank] Grid is not powered");
-
+            Debug.Log($"[SuitPowerbank] Grid is not powered, skipping charging");
             return;
          }
          if (charger != null)
          {
-            //Log.WriteLine("[SuitPowerbank] Charger UpdateAfterSimulation100");
             var inv = charger.GetInventory(0);
             if (inv != null)
             {
                var items = inv.GetItems();
-               isCharging = CheckIfChargeableItems(items);
-               //Log.WriteLine($"[SuitPowerbank] Items in inventory {items.Count()}");
                if (items != null && items.Count() > 0)
                {
+                  isCharging = CheckIfChargeableItems(items);
+                  Debug.Log($"[SuitPowerbank] is charging: {isCharging}, items count is: {items.Count()}");
                   foreach (var item in items)
                   {
                      var powerbankCell = item.Content as MyObjectBuilder_GasContainerObject;
@@ -107,25 +100,87 @@ namespace Nerdorbit.SuitPowerbank
       
       private bool CheckIfGridIsPowered(IMyCubeGrid cubeGrid)
       {
-         //Log.WriteLine("[SuitPowerbank] CheckIfGridIsPowered");
-         List<IMySlimBlock> blocks = new List<IMySlimBlock>();
-         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyPowerProducer);
+         try 
+         {
+            if (CheckGridForPowerProducers(cubeGrid))
+            {
+               charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, (isCharging ? LIGHTBLUE : GREEN), 0.75f);
+               return true;
+            }   
+         }
+         catch (Exception ex)
+         {
+            Debug.Log($"[SuitPowerbank] Exception when crawling connected grids: {ex}, {ex.Message}");
+         }
+         charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, RED, 0.75f);
+         return false;
+      }
+
+      private bool CheckGridForPowerProducers(IMyCubeGrid cubeGrid, Sandbox.ModAPI.IMyShipConnector excludeConnector = null, 
+      Sandbox.ModAPI.IMyMechanicalConnectionBlock excludeMechanicalBlock = null,
+      Sandbox.ModAPI.IMyAttachableTopBlock excludeAttachableTopBlock = null)
+      {
          if (cubeGrid == null)
          {
-            //Log.WriteLine("[SuitPowerbank] CubeGrid is null");
             return false;
          }
-         //Log.WriteLine($"[SuitPowerbank] Blocks has {blocks.Count} blocks");  
+         List<IMySlimBlock> blocks = new List<IMySlimBlock>();
+         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyPowerProducer);
+         // Check all blocks on the current grid for active power producers
          foreach (var block in blocks) 
          { 
             Sandbox.ModAPI.IMyPowerProducer powerProducer = block.FatBlock as Sandbox.ModAPI.IMyPowerProducer;
             if (powerProducer != null && powerProducer.Enabled && powerProducer.IsWorking) 
             {
-               charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, (isCharging ? LIGHTBLUE : GREEN), 0.75f);
                return true; 
-            } 
+            }
          }
-         charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, RED, 0.75f);
+         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyShipConnector);
+         foreach (var block in blocks)
+         {
+            Sandbox.ModAPI.IMyShipConnector connector = block.FatBlock as Sandbox.ModAPI.IMyShipConnector;
+            if (connector != null && connector.Status == MyShipConnectorStatus.Connected) 
+            {
+               // exclude checking the connector that is connected to the current grid
+               if (excludeConnector != null && connector.EntityId == excludeConnector.EntityId)
+               {
+                  continue;
+               }
+               Sandbox.ModAPI.IMyShipConnector otherConnector = connector.OtherConnector;
+               if (otherConnector != null && otherConnector.Status == MyShipConnectorStatus.Connected && otherConnector.CubeGrid != null) 
+               {
+                  return CheckGridForPowerProducers(otherConnector.CubeGrid, excludeConnector: otherConnector);
+               }
+            }
+         }
+         // Check for connected grids via rotors, pistons, and hinges (lower part)
+         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyMechanicalConnectionBlock);
+         foreach (var block in blocks)
+         {
+            if (excludeMechanicalBlock != null && block.FatBlock.EntityId == excludeMechanicalBlock.EntityId)
+            {
+               continue;
+            }
+            Sandbox.ModAPI.IMyMechanicalConnectionBlock mechanicalBlock = block.FatBlock as Sandbox.ModAPI.IMyMechanicalConnectionBlock;
+            if (mechanicalBlock != null && mechanicalBlock.TopGrid != null)
+            {
+               return CheckGridForPowerProducers(mechanicalBlock.TopGrid, excludeAttachableTopBlock: mechanicalBlock.Top);
+            }
+         }
+         // Check for connected grids via rotors, pistons, and hinges (attachable part)
+         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyAttachableTopBlock );
+         foreach (var block in blocks)
+         {
+            if (excludeAttachableTopBlock != null && block.FatBlock.EntityId == excludeAttachableTopBlock.EntityId)
+            {
+               continue;
+            }
+            Sandbox.ModAPI.IMyAttachableTopBlock  attachableTopBlock = block.FatBlock as Sandbox.ModAPI.IMyAttachableTopBlock;
+            if (attachableTopBlock != null && attachableTopBlock.Base != null)
+            {
+               return CheckGridForPowerProducers(attachableTopBlock.Base.CubeGrid, excludeMechanicalBlock: attachableTopBlock.Base);
+            }
+         }
          return false;
       }
    

@@ -30,6 +30,11 @@ namespace Nerdorbit.SuitPowerbank
             IMyPlayer player = MyAPIGateway.Players.TryGetIdentityId(PlayerId);
             if (player != null)
             {
+                var playerInv = player.Character.GetInventory();
+                if (playerInv != null)
+                {
+                    playerInv.TransferItemTo(playerInv, 0,0);
+                }
                MyAPIGateway.Utilities.ShowNotification("Powerbank depleted", 2000, MyFontEnum.Green);
                MyEntity3DSoundEmitter soundEmitter = new MyEntity3DSoundEmitter(player.Controller.ControlledEntity as MyEntity);
                soundEmitter.CustomVolume = 0.5f;
