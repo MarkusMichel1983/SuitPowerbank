@@ -9,6 +9,7 @@ namespace Nerdorbit.SuitPowerbank
 	{
 		public float ENERGY_THRESHOLD;
 		public bool DEBUG;
+		public bool NO_WARNING_SOUND;
 	}
 
 	[MySessionComponentDescriptor(MyUpdateOrder.AfterSimulation)]
@@ -17,7 +18,8 @@ namespace Nerdorbit.SuitPowerbank
 		public static SuitPowerbankConfig suitPowerbankConfig = new SuitPowerbankConfig()
 		{
             ENERGY_THRESHOLD = 0.05f,
-            DEBUG = false
+            DEBUG = false,
+			NO_WARNING_SOUND = false
 		};
 
 		public override void Init(MyObjectBuilder_SessionComponent sessionComponent)

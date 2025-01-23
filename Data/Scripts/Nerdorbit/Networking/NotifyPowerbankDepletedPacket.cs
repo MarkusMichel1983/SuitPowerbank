@@ -35,10 +35,14 @@ namespace Nerdorbit.SuitPowerbank
                 {
                     playerInv.TransferItemTo(playerInv, 0,0);
                 }
-               MyAPIGateway.Utilities.ShowNotification("Powerbank depleted", 2000, MyFontEnum.Green);
-               MyEntity3DSoundEmitter soundEmitter = new MyEntity3DSoundEmitter(player.Controller.ControlledEntity as MyEntity);
-               soundEmitter.CustomVolume = 0.5f;
-               soundEmitter.PlaySound(soundPair);
+                MyAPIGateway.Utilities.ShowNotification("Powerbank depleted", 2000, MyFontEnum.Green);
+                if (!Config.suitPowerbankConfig.NO_WARNING_SOUND)
+                {
+                    
+                    MyEntity3DSoundEmitter soundEmitter = new MyEntity3DSoundEmitter(player.Controller.ControlledEntity as MyEntity);
+                    soundEmitter.CustomVolume = 0.5f;
+                    soundEmitter.PlaySound(soundPair);
+                }
             }
 
             return true; // relay packet to other clients (only works if server receives it)
