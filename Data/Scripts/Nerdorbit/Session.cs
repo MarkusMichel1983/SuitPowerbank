@@ -213,7 +213,7 @@ namespace Nerdorbit.SuitPowerbank
             {
                playerInv.TransferItemTo(playerInv, 0,0);
             }
-            Networking.SendToPlayer(new NotifyPowerbankDepletedPacket(player.Character.ControllerInfo.ControllingIdentityId), player.SteamUserId);
+            Networking.SendToPlayer(new NotifyPowerbankDepletedPacket(player.Character.ControllerInfo.ControllingIdentityId, Config.suitPowerbankConfig.NO_WARNING_SOUND), player.SteamUserId);
          }
       }
       

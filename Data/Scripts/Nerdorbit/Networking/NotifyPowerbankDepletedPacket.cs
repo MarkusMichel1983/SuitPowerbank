@@ -12,14 +12,17 @@ namespace Nerdorbit.SuitPowerbank
     {
         [ProtoMember(1)]
         public long PlayerId;
+        [ProtoMember(2)]
+        public bool NoSound;
 
         private MySoundPair soundPair = new MySoundPair("SuitPowerbankDepleted");
 
         public NotifyPowerbankDepletedPacket() { } // Empty constructor required for deserialization
 
-        public NotifyPowerbankDepletedPacket(long playerId)
+        public NotifyPowerbankDepletedPacket(long playerId, bool noSound)
         {
             this.PlayerId = playerId;
+            this.NoSound = noSound;
         }
 
         public override bool Received()
@@ -36,9 +39,8 @@ namespace Nerdorbit.SuitPowerbank
                     playerInv.TransferItemTo(playerInv, 0,0);
                 }
                 MyAPIGateway.Utilities.ShowNotification("Powerbank depleted", 2000, MyFontEnum.Green);
-                if (!Config.suitPowerbankConfig.NO_WARNING_SOUND)
+                if (!NoSound)
                 {
-                    
                     MyEntity3DSoundEmitter soundEmitter = new MyEntity3DSoundEmitter(player.Controller.ControlledEntity as MyEntity);
                     soundEmitter.CustomVolume = 0.5f;
                     soundEmitter.PlaySound(soundPair);
