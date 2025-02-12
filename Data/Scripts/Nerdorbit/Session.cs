@@ -135,10 +135,12 @@ namespace Nerdorbit.SuitPowerbank
       {           
          var playerid = player.Character.ControllerInfo.ControllingIdentityId;
          if (player.Character.IsDead)
+         {
+            Debug.Log($"Player {player.DisplayName} is in a cockpit/bed");
             return;
+         }
 
-         if (player.Character.CurrentMovementState == MyCharacterMovementEnum.Sitting &&
-					(player.Controller.ControlledEntity as Sandbox.ModAPI.IMyShipController) != null)
+         if(IsInCockpitOrBed(player))
          {
             // no need to check for powerbanks when player is in a cockpit/bed
             Debug.Log($"Player {player.DisplayName} is in a cockpit/bed");
@@ -164,7 +166,30 @@ namespace Nerdorbit.SuitPowerbank
                }
             }
          }
-      }      
+      }
+
+      private bool IsInCockpitOrBed(IMyPlayer player)
+      {
+         if (player.Character.CurrentMovementState == MyCharacterMovementEnum.Sitting)
+         {
+            if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyShipController)
+            {
+               Debug.Log($"Player {player.DisplayName} is in a ShipController");
+               return true;
+            }
+            else if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyCockpit)
+            {
+               Debug.Log($"Player {player.DisplayName} is in a Cockpit");
+               return true;
+            }
+            else if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyCryoChamber)
+            {
+               Debug.Log($"Player {player.DisplayName} is in a CryoChamber");
+               return true;
+            }
+         }
+         return false;
+      }
 
       private void HandlePowerbank(IMyInventoryItem item, IMyPlayer player)
       {

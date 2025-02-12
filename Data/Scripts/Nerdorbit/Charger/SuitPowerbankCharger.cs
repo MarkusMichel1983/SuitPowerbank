@@ -50,8 +50,8 @@ namespace Nerdorbit.SuitPowerbank
          {
             return;
          }
-         
-         if(charger?.CubeGrid?.Physics == null || CheckIfGridIsPowered(charger?.CubeGrid) == false) 
+         bool isPowered = CheckIfGridIsPowered(charger?.CubeGrid);
+         if(charger?.CubeGrid?.Physics == null || isPowered == false) 
          {
             Debug.Log($"[SuitPowerbank] Grid is not powered, skipping charging");
             return;
@@ -88,6 +88,10 @@ namespace Nerdorbit.SuitPowerbank
                         charger.UpdateVisual();
                      }
                   }               
+               }
+               else
+               {
+                  isCharging = false;
                }
             }
          }
