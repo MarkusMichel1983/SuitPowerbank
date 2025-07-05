@@ -82,7 +82,7 @@ namespace Nerdorbit.SuitPowerbank
          MyAPIGateway.Players?.GetPlayers(players);   
          if (players != null)
          {
-            Debug.Log($"UpdateAfterSimulation100: Players count: {players.Count}");
+            Debug.Log($"[SuitPowerbank] UpdateAfterSimulation100: Players count: {players.Count}");
             foreach (var player in players)
             {
                if (player.IsBot || player.Character == null || player.Character.IsDead)
@@ -136,14 +136,14 @@ namespace Nerdorbit.SuitPowerbank
          var playerid = player.Character.ControllerInfo.ControllingIdentityId;
          if (player.Character.IsDead)
          {
-            Debug.Log($"Player {player.DisplayName} is in a cockpit/bed");
+            Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is dead");
             return;
          }
 
          if(IsInCockpitOrBed(player))
          {
             // no need to check for powerbanks when player is in a cockpit/bed
-            Debug.Log($"Player {player.DisplayName} is in a cockpit/bed");
+            Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a cockpit/bed");
             return;
          }
          
@@ -169,22 +169,23 @@ namespace Nerdorbit.SuitPowerbank
       }
 
       private bool IsInCockpitOrBed(IMyPlayer player)
-      {
+      {  
+         Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is {player.Character.CurrentMovementState.ToString()}");
          if (player.Character.CurrentMovementState == MyCharacterMovementEnum.Sitting)
          {
             if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyShipController)
             {
-               Debug.Log($"Player {player.DisplayName} is in a ShipController");
+               Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a ShipController");
                return true;
             }
             else if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyCockpit)
             {
-               Debug.Log($"Player {player.DisplayName} is in a Cockpit");
+               Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a Cockpit");
                return true;
             }
             else if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyCryoChamber)
             {
-               Debug.Log($"Player {player.DisplayName} is in a CryoChamber");
+               Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a CryoChamber");
                return true;
             }
          }
@@ -206,7 +207,7 @@ namespace Nerdorbit.SuitPowerbank
             {
                MyVisualScriptLogicProvider.SetPlayersEnergyLevel(player.Character.ControllerInfo.ControllingIdentityId,1);
                bool deleteOldItem = item.Amount == 1;
-               Debug.Log($"{item.Content.SubtypeName} Amount is {item.Amount}");
+               Debug.Log($"[SuitPowerbank] {item.Content.SubtypeName} Amount is {item.Amount}");
                inventory.RemoveItemAmount(item, 1);
                
                var newItem = new MyObjectBuilder_InventoryItem { 
@@ -217,7 +218,7 @@ namespace Nerdorbit.SuitPowerbank
                suitPowerbank = newItem.Content as MyObjectBuilder_GasContainerObject;
                suitPowerbank.GasLevel -= fillAmount;
                inventory.AddItems(1, newItem.Content);
-               Debug.Log($"New item GasLevel is {suitPowerbank.GasLevel}");
+               Debug.Log($"[SuitPowerbank] New item GasLevel is {suitPowerbank.GasLevel}");
                if (deleteOldItem)
                {
                   inventory.RemoveItems(item.ItemId, sendEvent: true);
@@ -231,7 +232,7 @@ namespace Nerdorbit.SuitPowerbank
       {
          if (powerbank.GasLevel <= 0.01f)
          {    
-            Debug.Log($"Powerbank depleted for {player.DisplayName}");                   
+            Debug.Log($"[SuitPowerbank] Powerbank depleted for {player.DisplayName}");                   
             powerbank.GasLevel = 0.0f;
             var playerInv = player.Character.GetInventory();
             if (playerInv != null)

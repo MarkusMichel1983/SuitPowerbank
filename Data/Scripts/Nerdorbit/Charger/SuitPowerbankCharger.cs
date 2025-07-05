@@ -129,7 +129,7 @@ namespace Nerdorbit.SuitPowerbank
             return false;
          }
          List<IMySlimBlock> blocks = new List<IMySlimBlock>();
-         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyPowerProducer);
+         cubeGrid.GetBlocks(blocks, block => block != null && block.FatBlock is Sandbox.ModAPI.IMyPowerProducer);
          // Check all blocks on the current grid for active power producers
          foreach (var block in blocks) 
          { 
@@ -139,7 +139,7 @@ namespace Nerdorbit.SuitPowerbank
                return true; 
             }
          }
-         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyShipConnector);
+         cubeGrid.GetBlocks(blocks, block => block != null && block.FatBlock is Sandbox.ModAPI.IMyShipConnector);
          foreach (var block in blocks)
          {
             Sandbox.ModAPI.IMyShipConnector connector = block.FatBlock as Sandbox.ModAPI.IMyShipConnector;
@@ -158,7 +158,7 @@ namespace Nerdorbit.SuitPowerbank
             }
          }
          // Check for connected grids via rotors, pistons, and hinges (lower part)
-         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyMechanicalConnectionBlock);
+         cubeGrid.GetBlocks(blocks, block => block != null && block.FatBlock is Sandbox.ModAPI.IMyMechanicalConnectionBlock);
          foreach (var block in blocks)
          {
             if (excludeMechanicalBlock != null && block.FatBlock.EntityId == excludeMechanicalBlock.EntityId)
@@ -172,7 +172,7 @@ namespace Nerdorbit.SuitPowerbank
             }
          }
          // Check for connected grids via rotors, pistons, and hinges (attachable part)
-         cubeGrid.GetBlocks(blocks, block => block.FatBlock is Sandbox.ModAPI.IMyAttachableTopBlock );
+         cubeGrid.GetBlocks(blocks, block => block != null && block.FatBlock is Sandbox.ModAPI.IMyAttachableTopBlock );
          foreach (var block in blocks)
          {
             if (excludeAttachableTopBlock != null && block.FatBlock.EntityId == excludeAttachableTopBlock.EntityId)
