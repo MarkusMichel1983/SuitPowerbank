@@ -58,16 +58,18 @@ namespace Nerdorbit.SuitPowerbank
 
         public void Update()
         {
+            Debug.Log($"[SuitPowerbank.MyStatPlayerEnergyBottles] Update called for MyStatPlayerEnergyBottles");
             if (MyStatPlayerEnergyBottles.TIMER.ElapsedTimeSpan.TotalMilliseconds - MyStatPlayerEnergyBottles.CHECK_INTERVAL_MS < this.m_lastCheck)
                 return;
             this.m_lastCheck = MyStatPlayerEnergyBottles.TIMER.ElapsedTimeSpan.TotalMilliseconds;
             IMyCharacter localCharacter = MyAPIGateway.Session.Player?.Character;
             if (localCharacter != null && !localCharacter.IsDead)
             {
-                MyEntityStatComponent statComp = localCharacter.Components.Get<MyEntityStatComponent>();
+                MyCharacterStatComponent statComp = localCharacter.Components.Get<MyCharacterStatComponent>();
 
                 if (statComp == null)
                 {
+                    Debug.Log($"[SuitPowerbank.MyStatPlayerEnergyBottles] Stat comp is null for character {localCharacter.DisplayName}");
                     return;
                 }
                 IMyInventory inventory = localCharacter.GetInventory();
@@ -80,11 +82,14 @@ namespace Nerdorbit.SuitPowerbank
                         ))
                     {
                         // Multiply with 100 to make it work with the HUD
+                        Debug.Log($"[SuitPowerbank.MyStatPlayerEnergyBottles] CurrentValue: {this.CurrentValue}, adding {inventoryItem.Amount} of {inventoryItem.Content.SubtypeName}");
                         this.CurrentValue += (float) ((int) inventoryItem.Amount)*100;
                     }
                 }
-            } else
+            }
+            else
             {
+                Debug.Log($"[SuitPowerbank.MyStatPlayerEnergyBottles] CurrentValue: {this.CurrentValue} is set to Zero, because character is null or dead");
                 this.CurrentValue = 0.0f;
             }
         }

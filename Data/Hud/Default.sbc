@@ -785,6 +785,7 @@
                         <Text>{LOC:CycleHUD} - {GAME_CONTROL:TOGGLE_HUD}</Text>
                         <Font>White</Font>
                         <Scale>0.6</Scale>
+                        <MaxWidth>0.08</MaxWidth>
                         <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
 
                     </StatStyle>
@@ -1540,10 +1541,1348 @@
 
                     <!-- PLAYER STAT PROGRESS BARS -->
 
-                    <!-- 
-            HEALTH
-            ...............................................................................
-          -->
+                    <!-- RADIATION ............................................................................... -->
+
+                    <!-- Radiation Background Plate -->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>268</X>
+                            <Y>-227</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>168</X>
+                            <Y>68</Y>
+                        </SizePx>
+                        <Category>Background</Category>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0.01</Value>
+                            <StatId>player_radiation</StatId>
+                        </VisibleCondition>
+
+                        <Texture>RadiationPanel</Texture>
+                    </StatStyle>
+
+                    <!-- Radiation Symbol -->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>270</X>
+                            <Y>-221</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>48</X>
+                            <Y>48</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0.01</Value>
+                            <StatId>player_radiation</StatId>
+                        </VisibleCondition>
+
+                        <ColorMask>
+                            <X>1</X>
+                            <Y>0.75</Y>
+                            <Z>0</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_radiation</StatId>
+                            <Value>0.745</Value>
+                            <Operator>Above</Operator>
+                            <ProgressColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <Texture>RadiationIcon</Texture>
+                    </StatStyle>
+
+                    <!-- Exposure Level Text -->
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <OffsetPx>
+                            <X>339</X>
+                            <Y>-230</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>60</X>
+                            <Y>60</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0.01</Value>
+                            <StatId>player_radiation</StatId>
+                        </VisibleCondition>
+
+                        <Text>{LOC:RadiationExposureLevel}</Text>
+                        <Font>White</Font>
+                        <Scale>0.6</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+
+                        <ColorMask>
+                            <X>0.834375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <!-- Progress Bar -->
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_radiation</StatId>
+
+                        <OffsetPx>
+                            <X>314</X>
+                            <Y>-186</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>84</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_radiation</StatId>
+                            <Value>0.01</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_radiation</StatId>
+                            <Value>0.745</Value>
+                            <Operator>Above</Operator>
+                            <ProgressColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar3_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar3_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>1</X>
+                                <Y>0.75</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_radiation</StatId>
+                        <OffsetPx>
+                            <X>403</X>
+                            <Y>-191</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0.01</Value>
+                            <StatId>player_radiation</StatId>
+                        </VisibleCondition>
+
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.6</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_radiation</StatId>
+                            <Value>0.745</Value>
+                            <Operator>Above</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                    </StatStyle>
+
+                </StatStyles>
+            </StatControl>
+
+            <!--
+            Survival bars with food
+            -->
+            
+            <StatControl>
+                <VisibleCondition xsi:type="Condition">
+                    <Operator>And</Operator>
+                    <Terms>
+                        <Term xsi:type="StatCondition">
+                            <StatId>controlled_is_turret</StatId>
+                            <Operator>Below</Operator>
+                            <Value>1</Value>
+                        </Term>
+                        <Term xsi:type="StatCondition">
+                            <StatId>hud_mode</StatId>
+                            <Operator>Above</Operator>
+                            <Value>0</Value>
+                        </Term>
+                        <Term xsi:type="StatCondition">
+                            <StatId>session_food_consumption_rate</StatId>
+                            <Operator>Above</Operator>
+                            <Value>0</Value>
+                        </Term>
+                    </Terms>
+                </VisibleCondition>
+
+                <Position>
+                    <X>0.003</X>
+                    <Y>0</Y>
+                </Position>
+                <OriginAlign>HORISONTAL_LEFT_AND_VERTICAL_BOTTOM</OriginAlign>
+
+                <StatStyles>
+			<!-- RADIATION ........................................................................ -->
+					<!-- Radiation Immunity -->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>16</X>
+                            <Y>-157</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>28</X>
+                            <Y>28</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0</Value>
+                            <StatId>player_radiation_immunity</StatId>
+                        </VisibleCondition>
+
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_radiation_immunity</StatId>
+                            <Value>0.1</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <Texture>MedicineIcon</Texture>
+                    </StatStyle>
+
+            <!-- HEALTH ........................................................................... -->
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_health</StatId>
+
+                        <OffsetPx>
+                            <X>68</X>
+                            <Y>-148</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>150</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_health</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                            <ProgressColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>0.734375</X>
+                                <Y>0.9137254901960784</Y>
+                                <Z>0.9647058823529412</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_health</StatId>
+
+                        <OffsetPx>
+                            <X>231</X>
+                            <Y>-155</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_health</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.7</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <StatId>player_health</StatId>
+
+                        <OffsetPx>
+                            <X>40</X>
+                            <Y>-155</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>24</X>
+                            <Y>24</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_health</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <Texture>HealthIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+ 
+            <!-- FOOD ............................................................................. -->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>15</X>
+                            <Y>-132</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>30</X>
+                            <Y>30</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0</Value>
+                            <StatId>player_is_using_cryo_chamber</StatId>
+                        </VisibleCondition>
+
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                        
+                        <Texture>PauseIcon</Texture>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_food</StatId>
+
+                        <OffsetPx>
+                            <X>68</X>
+                            <Y>-121</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>150</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_food</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                            <ProgressColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>0.734375</X>
+                                <Y>0.9137254901960784</Y>
+                                <Z>0.9647058823529412</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_food</StatId>
+
+                        <OffsetPx>
+                            <X>231</X>
+                            <Y>-128</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_food</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.7</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <StatId>player_food</StatId>
+
+                        <OffsetPx>
+                            <X>42</X>
+                            <Y>-127</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>20</X>
+                            <Y>20</Y>
+                        </SizePx>
+                        
+                        <BlinkCondition xsi:type="Condition">
+                            <Operator>And</Operator>
+                            <Terms>
+                                <Term xsi:type="StatCondition">
+                                    <StatId>player_food</StatId>
+                                    <Value>0.25</Value>
+                                    <Operator>Below</Operator>
+                                </Term>
+                                <Term xsi:type="StatCondition">
+                                    <StatId>player_cant_sprint</StatId>
+                                    <Value>0.5</Value>
+                                    <Operator>Below</Operator>
+                                </Term>
+                            </Terms>
+                        </BlinkCondition>
+
+                        <!--
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_food</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>                                                
+                        -->
+                        
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <Texture>FoodIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+            <!-- POWER ............................................................................ -->
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_energy</StatId>
+
+                        <OffsetPx>
+                            <X>68</X>
+                            <Y>-94</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>150</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_energy</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>0.734375</X>
+                                <Y>0.9137254901960784</Y>
+                                <Z>0.9647058823529412</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_energy</StatId>
+
+                        <OffsetPx>
+                            <X>231</X>
+                            <Y>-101</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_energy</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.7</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <StatId>player_energy</StatId>
+
+                        <OffsetPx>
+                            <X>40</X>
+                            <Y>-100</Y>
+                        </OffsetPx>
+
+                        <SizePx>
+                            <X>24</X>
+                            <Y>24</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_energy</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <Texture>EnergyIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                    </StatStyle>
+                <!--Energy Bottles-->
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>74</X>
+                            <Y>-103</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>0.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>97</X>
+                            <Y>-103</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>1.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>120</X>
+                            <Y>-103</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>2.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>141</X>
+                            <Y>-105.5</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>11</X>
+                            <Y>11</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>3.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>HealthIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+ 
+            <!-- OXYGEN ............................................................................... -->
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_oxygen</StatId>
+
+                        <OffsetPx>
+                            <X>68</X>
+                            <Y>-67</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>150</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>0.734375</X>
+                                <Y>0.9137254901960784</Y>
+                                <Z>0.9647058823529412</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_oxygen</StatId>
+
+                        <OffsetPx>
+                            <X>231</X>
+                            <Y>-73</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.7</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <StatId>player_oxygen</StatId>
+
+                        <OffsetPx>
+                            <X>40</X>
+                            <Y>-73</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>24</X>
+                            <Y>24</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <Texture>OxygenIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <!--O2 Bottles-->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>74</X>
+                            <Y>-76</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>97</X>
+                            <Y>-76</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>1</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>120</X>
+                            <Y>-76</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>2</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>141</X>
+                            <Y>-78.5</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>10</X>
+                            <Y>10.5</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>3</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>HealthIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+            <!-- HYDROGEN ......................................................................... -->
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_hydrogen</StatId>
+
+                        <OffsetPx>
+                            <X>68</X>
+                            <Y>-40</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>150</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>0.734375</X>
+                                <Y>0.9137254901960784</Y>
+                                <Z>0.9647058823529412</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_hydrogen</StatId>
+
+                        <OffsetPx>
+                            <X>231</X>
+                            <Y>-46</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.7</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <StatId>player_hydrogen</StatId>
+
+                        <OffsetPx>
+                            <X>40</X>
+                            <Y>-46</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>24</X>
+                            <Y>24</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <Texture>HydrogenIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <!-- H2 Bottles -->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>74</X>
+                            <Y>-49</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen_bottles</StatId>
+                            <Value>0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>97</X>
+                            <Y>-49</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen_bottles</StatId>
+                            <Value>1</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>120</X>
+                            <Y>-49</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen_bottles</StatId>
+                            <Value>2</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>141</X>
+                            <Y>-51</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>10</X>
+                            <Y>10.5</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_hydrogen_bottles</StatId>
+                            <Value>3</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>HealthIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                </StatStyles>
+            </StatControl>
+
+            <!--
+            Survival bars without food
+            -->
+            
+            <StatControl>
+                <VisibleCondition xsi:type="Condition">
+                    <Operator>And</Operator>
+                    <Terms>
+                        <Term xsi:type="StatCondition">
+                            <StatId>controlled_is_turret</StatId>
+                            <Operator>Below</Operator>
+                            <Value>1</Value>
+                        </Term>
+                        <Term xsi:type="StatCondition">
+                            <StatId>hud_mode</StatId>
+                            <Operator>Above</Operator>
+                            <Value>0</Value>
+                        </Term>
+                        <Term xsi:type="StatCondition">
+                            <StatId>session_food_consumption_rate</StatId>
+                            <Operator>Equal</Operator>
+                            <Value>0</Value>
+                        </Term>
+                    </Terms>
+                </VisibleCondition>
+
+                <Position>
+                    <X>0.003</X>
+                    <Y>0</Y>
+                </Position>
+                <OriginAlign>HORISONTAL_LEFT_AND_VERTICAL_BOTTOM</OriginAlign>
+
+                <StatStyles>
+			<!-- RADIATION (Classic Hud Style)..................................................... -->
+					<!-- Radiation Immunity -->
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>16</X>
+                            <Y>-145</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>28</X>
+                            <Y>28</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <Operator>Above</Operator>
+                            <Value>0</Value>
+                            <StatId>player_radiation_immunity</StatId>
+                        </VisibleCondition>
+
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_radiation_immunity</StatId>
+                            <Value>0.1</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+
+                        <Texture>MedicineIcon</Texture>
+                    </StatStyle>
+
+			<!-- HEALTH (Classic Hud Style)........................................................ -->
                     <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
                         <StatId>player_health</StatId>
 
@@ -1676,12 +3015,9 @@
                         </ColorMask>
                     </StatStyle>
 
-                    <!-- 
-            O2 
-            ...............................................................................
-          -->
+			<!-- POWER (Classic Hud Style)......................................................... -->
                     <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
-                        <StatId>player_oxygen</StatId>
+                        <StatId>player_energy</StatId>
 
                         <OffsetPx>
                             <X>68</X>
@@ -1693,231 +3029,6 @@
                         </SizePx>
 
                         <BlinkCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen</StatId>
-                            <Value>0.25</Value>
-                            <Operator>Below</Operator>
-                        </BlinkCondition>
-                        <Blink>
-                            <ColorMask>
-                                <X>1</X>
-                                <Y>0</Y>
-                                <Z>0</Z>
-                                <W>1</W>
-                            </ColorMask>
-                            <MinAlpha>0.6</MinAlpha>
-                            <MaxAlpha>1</MaxAlpha>
-                        </Blink>
-                        <SimpleStyle>
-                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
-                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
-                            <ProgressTextureOffsetPx>
-                                <X>0</X>
-                                <Y>0</Y>
-                            </ProgressTextureOffsetPx>
-                            <ProgressColorMask>
-                                <X>0.734375</X>
-                                <Y>0.9137254901960784</Y>
-                                <Z>0.9647058823529412</Z>
-                                <W>1</W>
-                            </ProgressColorMask>
-                            <BackgroundColorMask>
-                                <X>0.3137</X>
-                                <Y>0.3607</Y>
-                                <Z>0.4039</Z>
-                                <W>1</W>
-                            </BackgroundColorMask>
-                        </SimpleStyle>
-                    </StatStyle>
-
-                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
-                        <StatId>player_oxygen</StatId>
-
-                        <OffsetPx>
-                            <X>231</X>
-                            <Y>-110</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>16</X>
-                            <Y>16</Y>
-                        </SizePx>
-
-                        <BlinkCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen</StatId>
-                            <Value>0.25</Value>
-                            <Operator>Below</Operator>
-                        </BlinkCondition>
-                        <Blink>
-                            <ColorMask>
-                                <X>1</X>
-                                <Y>0</Y>
-                                <Z>0</Z>
-                                <W>1</W>
-                            </ColorMask>
-                        </Blink>
-                        <Percentage>true</Percentage>
-                        <Precision>0</Precision>
-                        <Text>{STAT}</Text>
-                        <Font>White</Font>
-                        <Scale>0.7</Scale>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
-                    </StatStyle>
-
-                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
-                        <StatId>player_oxygen</StatId>
-
-                        <OffsetPx>
-                            <X>40</X>
-                            <Y>-113</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>24</X>
-                            <Y>24</Y>
-                        </SizePx>
-
-                        <BlinkCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen</StatId>
-                            <Value>0.25</Value>
-                            <Operator>Below</Operator>
-                        </BlinkCondition>
-                        <Blink>
-                            <ColorMask>
-                                <X>1</X>
-                                <Y>0</Y>
-                                <Z>0</Z>
-                                <W>1</W>
-                            </ColorMask>
-                            <MinAlpha>1</MinAlpha>
-                            <MaxAlpha>1</MaxAlpha>
-                        </Blink>
-                        <Texture>OxygenIcon</Texture>
-                        <ColorMask>
-                            <X>0.734375</X>
-                            <Y>0.9137254901960784</Y>
-                            <Z>0.9647058823529412</Z>
-                            <W>1</W>
-                        </ColorMask>
-                    </StatStyle>
-
-                    <!--O2 Bottles-->
-
-                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
-                        <OffsetPx>
-                            <X>74</X>
-                            <Y>-113</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>18</X>
-                            <Y>6</Y>
-                        </SizePx>
-
-                        <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen_bottles</StatId>
-                            <Value>0</Value>
-                            <Operator>Above</Operator>
-                        </VisibleCondition>
-
-                        <Texture>Bottle</Texture>
-                        <ColorMask>
-                            <X>0.734375</X>
-                            <Y>0.9137254901960784</Y>
-                            <Z>0.9647058823529412</Z>
-                            <W>1</W>
-                        </ColorMask>
-                    </StatStyle>
-
-                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
-                        <OffsetPx>
-                            <X>97</X>
-                            <Y>-113</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>18</X>
-                            <Y>6</Y>
-                        </SizePx>
-
-                        <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen_bottles</StatId>
-                            <Value>1</Value>
-                            <Operator>Above</Operator>
-                        </VisibleCondition>
-
-                        <Texture>Bottle</Texture>
-                        <ColorMask>
-                            <X>0.734375</X>
-                            <Y>0.9137254901960784</Y>
-                            <Z>0.9647058823529412</Z>
-                            <W>1</W>
-                        </ColorMask>
-                    </StatStyle>
-
-                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
-                        <OffsetPx>
-                            <X>122</X>
-                            <Y>-113</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>18</X>
-                            <Y>6</Y>
-                        </SizePx>
-
-                        <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen_bottles</StatId>
-                            <Value>2</Value>
-                            <Operator>Above</Operator>
-                        </VisibleCondition>
-
-                        <Texture>Bottle</Texture>
-                        <ColorMask>
-                            <X>0.734375</X>
-                            <Y>0.9137254901960784</Y>
-                            <Z>0.9647058823529412</Z>
-                            <W>1</W>
-                        </ColorMask>
-
-                    </StatStyle>
-
-                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
-                        <OffsetPx>
-                            <X>141</X>
-                            <Y>-116.5</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>11</X>
-                            <Y>11</Y>
-                        </SizePx>
-
-                        <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_oxygen_bottles</StatId>
-                            <Value>3</Value>
-                            <Operator>Above</Operator>
-                        </VisibleCondition>
-
-                        <Texture>HealthIcon</Texture>
-                        <ColorMask>
-                            <X>0.734375</X>
-                            <Y>0.9137254901960784</Y>
-                            <Z>0.9647058823529412</Z>
-                            <W>1</W>
-                        </ColorMask>
-                    </StatStyle>
-
-                    <!-- 
-            Power
-            ...............................................................................
-             -->
-                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
-                        <StatId>player_energy</StatId>
-
-                        <OffsetPx>
-                            <X>68</X>
-                            <Y>-77</Y>
-                        </OffsetPx>
-                        <SizePx>
-                            <X>150</X>
-                            <Y>9</Y>
-                        </SizePx>
-
-                        <BlinkCondition xsi:type="StatCondition">
                             <StatId>player_energy</StatId>
                             <Value>0.25</Value>
                             <Operator>Below</Operator>
@@ -1959,7 +3070,7 @@
 
                         <OffsetPx>
                             <X>231</X>
-                            <Y>-82</Y>
+                            <Y>-111</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>16</X>
@@ -1992,9 +3103,8 @@
 
                         <OffsetPx>
                             <X>40</X>
-                            <Y>-85</Y>
+                            <Y>-113</Y>
                         </OffsetPx>
-
                         <SizePx>
                             <X>24</X>
                             <Y>24</Y>
@@ -2025,12 +3135,130 @@
 
                     </StatStyle>
 
-<!--Energy Bottles-->
+			<!-- OXYGEN (Classic Hud Style)........................................................ -->
+                    <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
+                        <StatId>player_oxygen</StatId>
 
+                        <OffsetPx>
+                            <X>68</X>
+                            <Y>-77</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>150</X>
+                            <Y>9</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>0.6</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <SimpleStyle>
+                            <BackgroundTexture>ProgressBar_Background</BackgroundTexture>
+                            <ProgressTexture>ProgressBar_Bar</ProgressTexture>
+                            <ProgressTextureOffsetPx>
+                                <X>0</X>
+                                <Y>0</Y>
+                            </ProgressTextureOffsetPx>
+                            <ProgressColorMask>
+                                <X>0.734375</X>
+                                <Y>0.9137254901960784</Y>
+                                <Z>0.9647058823529412</Z>
+                                <W>1</W>
+                            </ProgressColorMask>
+                            <BackgroundColorMask>
+                                <X>0.3137</X>
+                                <Y>0.3607</Y>
+                                <Z>0.4039</Z>
+                                <W>1</W>
+                            </BackgroundColorMask>
+                        </SimpleStyle>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                        <StatId>player_oxygen</StatId>
+
+                        <OffsetPx>
+                            <X>231</X>
+                            <Y>-83</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>16</X>
+                            <Y>16</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                        </Blink>
+                        <Percentage>true</Percentage>
+                        <Precision>0</Precision>
+                        <Text>{STAT}</Text>
+                        <Font>White</Font>
+                        <Scale>0.7</Scale>
+                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <StatId>player_oxygen</StatId>
+
+                        <OffsetPx>
+                            <X>40</X>
+                            <Y>-85</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>24</X>
+                            <Y>24</Y>
+                        </SizePx>
+
+                        <BlinkCondition xsi:type="StatCondition">
+                            <StatId>player_oxygen</StatId>
+                            <Value>0.25</Value>
+                            <Operator>Below</Operator>
+                        </BlinkCondition>
+                        <Blink>
+                            <ColorMask>
+                                <X>1</X>
+                                <Y>0</Y>
+                                <Z>0</Z>
+                                <W>1</W>
+                            </ColorMask>
+                            <MinAlpha>1</MinAlpha>
+                            <MaxAlpha>1</MaxAlpha>
+                        </Blink>
+                        <Texture>OxygenIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <!-- O2 Bottles -->
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
                             <X>74</X>
-                            <Y>-85</Y>
+                            <Y>-86</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>18</X>
@@ -2038,8 +3266,8 @@
                         </SizePx>
 
                         <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_energy_bottles</StatId>
-                            <Value>0.0</Value>
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>0</Value>
                             <Operator>Above</Operator>
                         </VisibleCondition>
 
@@ -2055,7 +3283,7 @@
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
                             <X>97</X>
-                            <Y>-85</Y>
+                            <Y>-86</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>18</X>
@@ -2063,8 +3291,8 @@
                         </SizePx>
 
                         <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_energy_bottles</StatId>
-                            <Value>1.0</Value>
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>1</Value>
                             <Operator>Above</Operator>
                         </VisibleCondition>
 
@@ -2079,8 +3307,8 @@
 
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
-                            <X>122</X>
-                            <Y>-85</Y>
+                            <X>120</X>
+                            <Y>-86</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>18</X>
@@ -2088,8 +3316,8 @@
                         </SizePx>
 
                         <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_energy_bottles</StatId>
-                            <Value>2.0</Value>
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>2</Value>
                             <Operator>Above</Operator>
                         </VisibleCondition>
 
@@ -2109,13 +3337,13 @@
                             <Y>-88.5</Y>
                         </OffsetPx>
                         <SizePx>
-                            <X>11</X>
-                            <Y>11</Y>
+                            <X>10</X>
+                            <Y>10.5</Y>
                         </SizePx>
 
                         <VisibleCondition xsi:type="StatCondition">
-                            <StatId>player_energy_bottles</StatId>
-                            <Value>3.0</Value>
+                            <StatId>player_oxygen_bottles</StatId>
+                            <Value>3</Value>
                             <Operator>Above</Operator>
                         </VisibleCondition>
 
@@ -2127,10 +3355,8 @@
                             <W>1</W>
                         </ColorMask>
                     </StatStyle>
-                    <!-- 
-            Hydrogen
-            ...............................................................................
-             -->
+
+			<!-- HYDROGEN (Classic Hud Style)...................................................... -->
                     <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
                         <StatId>player_hydrogen</StatId>
 
@@ -2250,12 +3476,11 @@
                         </ColorMask>
                     </StatStyle>
 
-                    <!--H2 Bottles-->
-
+                    <!-- H2 Bottles  -->
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
                             <X>74</X>
-                            <Y>-57</Y>
+                            <Y>-58</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>18</X>
@@ -2280,7 +3505,7 @@
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
                             <X>97</X>
-                            <Y>-57</Y>
+                            <Y>-58</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>18</X>
@@ -2305,7 +3530,7 @@
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
                             <X>120</X>
-                            <Y>-57</Y>
+                            <Y>-58</Y>
                         </OffsetPx>
                         <SizePx>
                             <X>18</X>
@@ -2330,11 +3555,11 @@
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
                             <X>141</X>
-                            <Y>-61</Y>
+                            <Y>-60</Y>
                         </OffsetPx>
                         <SizePx>
-                            <X>11</X>
-                            <Y>11</Y>
+                            <X>10</X>
+                            <Y>10.5</Y>
                         </SizePx>
 
                         <VisibleCondition xsi:type="StatCondition">
@@ -2448,7 +3673,7 @@
                         <StatId>environment_oxygen_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>155</X>
+                            <X>127</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -2476,7 +3701,7 @@
                         <Precision>0</Precision>
                         <Font>Red</Font>
                         <Scale>0.60</Scale>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
                     <!--Above 10%-->
@@ -2530,7 +3755,7 @@
                         <StatId>environment_oxygen_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>145</X>
+                            <X>127</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -2574,7 +3799,7 @@
                             <Z>0.27</Z>
                             <W>1</W>
                         </ColorMask>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
                     <!--Above 80%-->
@@ -2608,7 +3833,7 @@
                         <StatId>environment_oxygen_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>145</X>
+                            <X>127</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -2632,7 +3857,7 @@
                             <Z>0.27</Z>
                             <W>1</W>
                         </ColorMask>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
 
@@ -2678,7 +3903,7 @@
                         <StatId>environment_temperature_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>255</X>
+                            <X>231</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -2706,7 +3931,7 @@
                         <Precision>0</Precision>
                         <Font>Red</Font>
                         <Scale>0.60</Scale>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
                     <!--Cold-->
@@ -2760,7 +3985,7 @@
                         <StatId>environment_temperature_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>245</X>
+                            <X>231</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -2804,7 +4029,7 @@
                             <Z>0.27</Z>
                             <W>1</W>
                         </ColorMask>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
                     <!--Cozy-->
@@ -2864,7 +4089,7 @@
                         <StatId>environment_temperature_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>245</X>
+                            <X>231</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -2908,7 +4133,7 @@
                             <Z>0.27</Z>
                             <W>1</W>
                         </ColorMask>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
                     <!--Hot-->
@@ -2962,7 +4187,7 @@
                         <StatId>environment_temperature_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>245</X>
+                            <X>231</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -3006,7 +4231,7 @@
                             <Z>0.27</Z>
                             <W>1</W>
                         </ColorMask>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
                     <!--Extreme Hot-->
@@ -3040,7 +4265,7 @@
                         <StatId>environment_temperature_level</StatId>
                         <StatCriticalValue>0</StatCriticalValue>
                         <OffsetPx>
-                            <X>255</X>
+                            <X>231</X>
                             <Y>-88</Y>
                         </OffsetPx>
                         <SizePx>
@@ -3065,7 +4290,7 @@
                             <Z>0.27</Z>
                             <W>1</W>
                         </ColorMask>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_LEFT_AND_VERTICAL_CENTER</TextAlign>
                     </StatStyle>
 
 
@@ -3104,7 +4329,6 @@
                         <Font>White</Font>
                         <Scale>0.6</Scale>
                         <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
-
                     </StatStyle>
 
 
@@ -3199,7 +4423,7 @@
                         <Text>{GAME_CONTROL:INVENTORY}</Text>
                         <Font>White</Font>
                         <Scale>0.8</Scale>
-                        <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
+                        <TextAlign>HORISONTAL_RIGHT_AND_VERTICAL_CENTER</TextAlign>
 
                     </StatStyle>
 
@@ -3451,6 +4675,7 @@
 
                         <FadeInTimeMs>100</FadeInTimeMs>
                         <FadeOutTimeMs>500</FadeOutTimeMs>
+                        <MaxTextWidth>0.125</MaxTextWidth>
 
                         <VisibleCondition xsi:type="StatCondition">
                             <StatId>hud_mode</StatId>
@@ -3632,7 +4857,7 @@
 
                     <!--Toobar Tabs Keybind -->
 
-                    <StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
+                    <!--StatStyle xsi:type="MyObjectBuilder_TextStatVisualStyle">
 
                         <OffsetPx>
                             <X>-256</X>
@@ -3667,7 +4892,7 @@
                         <Scale>0.6</Scale>
                         <TextAlign>HORISONTAL_CENTER_AND_VERTICAL_CENTER</TextAlign>
 
-                    </StatStyle>
+                    </StatStyle-->
 
 
 

@@ -47,6 +47,7 @@ namespace Nerdorbit.SuitPowerbank
          isServer = MyAPIGateway.Multiplayer.IsServer;
 			if (!isServer)
 			{
+            Log.WriteLine("[SuitPowerbank.Session] Not a server, skipping Init");
 				return;
 			}
          Instance = this;
@@ -66,6 +67,7 @@ namespace Nerdorbit.SuitPowerbank
 		{
 			if (!isServer)
 			{
+            Debug.Log($"[SuitPowerbank.Session] Not a server, skipping UpdateAfterSimulation");
 				return;
 			}
 			if (skippedTicks++ > 100)
@@ -82,16 +84,17 @@ namespace Nerdorbit.SuitPowerbank
          MyAPIGateway.Players?.GetPlayers(players);   
          if (players != null)
          {
-            Debug.Log($"[SuitPowerbank] UpdateAfterSimulation100: Players count: {players.Count}");
+            Debug.Log($"[SuitPowerbank.Session] UpdateAfterSimulation100: Players count: {players.Count}");
             foreach (var player in players)
             {
                if (player.IsBot || player.Character == null || player.Character.IsDead)
                {
                   continue;
                }
-               MyEntityStatComponent statComp = player.Character?.Components?.Get<MyEntityStatComponent>();
+               MyCharacterStatComponent statComp = player.Character?.Components?.Get<MyCharacterStatComponent >();
                if (statComp == null)
                {
+                  Debug.Log($"[SuitPowerbank.Session] Stat comp is null for character {player.Character.DisplayName}");
                   continue;
                }
                MyEntityStat energyBottles;
@@ -136,14 +139,14 @@ namespace Nerdorbit.SuitPowerbank
          var playerid = player.Character.ControllerInfo.ControllingIdentityId;
          if (player.Character.IsDead)
          {
-            Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is dead");
+            Debug.Log($"[SuitPowerbank.Session] Player {player.DisplayName} is dead");
             return;
          }
 
          if(IsInCockpitOrBed(player))
          {
             // no need to check for powerbanks when player is in a cockpit/bed
-            Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a cockpit/bed");
+            Debug.Log($"[SuitPowerbank.Session] Player {player.DisplayName} is in a cockpit/bed");
             return;
          }
          
@@ -170,22 +173,22 @@ namespace Nerdorbit.SuitPowerbank
 
       private bool IsInCockpitOrBed(IMyPlayer player)
       {  
-         Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is {player.Character.CurrentMovementState.ToString()}");
+         Debug.Log($"[SuitPowerbank.Session] Player {player.DisplayName} is {player.Character.CurrentMovementState.ToString()}");
          if (player.Character.CurrentMovementState == MyCharacterMovementEnum.Sitting)
          {
             if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyShipController)
             {
-               Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a ShipController");
+               Debug.Log($"[SuitPowerbank.Session] Player {player.DisplayName} is in a ShipController");
                return true;
             }
             else if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyCockpit)
             {
-               Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a Cockpit");
+               Debug.Log($"[SuitPowerbank.Session] Player {player.DisplayName} is in a Cockpit");
                return true;
             }
             else if (player.Controller.ControlledEntity is Sandbox.ModAPI.IMyCryoChamber)
             {
-               Debug.Log($"[SuitPowerbank] Player {player.DisplayName} is in a CryoChamber");
+               Debug.Log($"[SuitPowerbank.Session] Player {player.DisplayName} is in a CryoChamber");
                return true;
             }
          }
@@ -207,7 +210,7 @@ namespace Nerdorbit.SuitPowerbank
             {
                MyVisualScriptLogicProvider.SetPlayersEnergyLevel(player.Character.ControllerInfo.ControllingIdentityId,1);
                bool deleteOldItem = item.Amount == 1;
-               Debug.Log($"[SuitPowerbank] {item.Content.SubtypeName} Amount is {item.Amount}");
+               Debug.Log($"[SuitPowerbank.Session] {item.Content.SubtypeName} Amount is {item.Amount}");
                inventory.RemoveItemAmount(item, 1);
                
                var newItem = new MyObjectBuilder_InventoryItem { 
@@ -218,7 +221,7 @@ namespace Nerdorbit.SuitPowerbank
                suitPowerbank = newItem.Content as MyObjectBuilder_GasContainerObject;
                suitPowerbank.GasLevel -= fillAmount;
                inventory.AddItems(1, newItem.Content);
-               Debug.Log($"[SuitPowerbank] New item GasLevel is {suitPowerbank.GasLevel}");
+               Debug.Log($"[SuitPowerbank.Session] New item GasLevel is {suitPowerbank.GasLevel}");
                if (deleteOldItem)
                {
                   inventory.RemoveItems(item.ItemId, sendEvent: true);
@@ -232,7 +235,7 @@ namespace Nerdorbit.SuitPowerbank
       {
          if (powerbank.GasLevel <= 0.01f)
          {    
-            Debug.Log($"[SuitPowerbank] Powerbank depleted for {player.DisplayName}");                   
+            Debug.Log($"[SuitPowerbank.Session] Powerbank depleted for {player.DisplayName}");                   
             powerbank.GasLevel = 0.0f;
             var playerInv = player.Character.GetInventory();
             if (playerInv != null)

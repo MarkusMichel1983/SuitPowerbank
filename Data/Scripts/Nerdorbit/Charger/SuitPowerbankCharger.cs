@@ -53,7 +53,7 @@ namespace Nerdorbit.SuitPowerbank
          bool isPowered = CheckIfGridIsPowered(charger?.CubeGrid);
          if(charger?.CubeGrid?.Physics == null || isPowered == false) 
          {
-            Debug.Log($"[SuitPowerbank] Grid is not powered, skipping charging");
+            Debug.Log($"[SuitPowerbank.SuitPowerbankCharger] Grid is not powered, skipping charging");
             return;
          }
          if (charger != null)
@@ -65,7 +65,7 @@ namespace Nerdorbit.SuitPowerbank
                if (items != null && items.Count() > 0)
                {
                   isCharging = CheckIfChargeableItems(items);
-                  Debug.Log($"[SuitPowerbank] is charging: {isCharging}, items count is: {items.Count()}");
+                  Debug.Log($"[SuitPowerbank.SuitPowerbankCharger] is charging: {isCharging}, items count is: {items.Count()}");
                   foreach (var item in items)
                   {
                      var powerbankCell = item.Content as MyObjectBuilder_GasContainerObject;
@@ -114,7 +114,7 @@ namespace Nerdorbit.SuitPowerbank
          }
          catch (Exception ex)
          {
-            Debug.Log($"[SuitPowerbank] Exception when crawling connected grids: {ex}, {ex.Message}");
+            Debug.Log($"[SuitPowerbank.SuitPowerbankCharger] Exception when crawling connected grids: {ex}, {ex.Message}");
          }
          charger?.SetEmissiveParts(EMISSIVE_MATERIAL_NAME, RED, 0.75f);
          return false;

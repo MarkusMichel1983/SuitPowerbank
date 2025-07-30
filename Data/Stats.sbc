@@ -4,6 +4,100 @@
         <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
             <Id>
                 <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>Health</SubtypeId>
+            </Id>
+            <Name>Health</Name>
+            <MinValue>0</MinValue>
+            <DefaultValue>100</DefaultValue>
+            <MaxValue>100</MaxValue>            
+        </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>SpiderHealth</SubtypeId>
+            </Id>
+            <Name>Health</Name>
+            <MinValue>0</MinValue>
+            <DefaultValue>150</DefaultValue>
+            <MaxValue>150</MaxValue>
+        </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>SpaceCharacterHealth</SubtypeId>
+            </Id>
+            <Name>Health</Name>
+            <MinValue>0</MinValue>
+            <DefaultValue>100</DefaultValue>
+            <MaxValue>100</MaxValue>
+            <ReducedOnSpawnValue>25</ReducedOnSpawnValue>
+        </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>WolfHealth</SubtypeId>
+            </Id>
+            <Name>Health</Name>
+            <MinValue>0</MinValue>
+            <MaxValue>85</MaxValue>
+        </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_RadiationStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>SpaceCharacterRadiation</SubtypeId>
+            </Id>
+            <Name>Radiation</Name>
+            <MinValue>0</MinValue>
+            <DefaultValue>0</DefaultValue>
+            <MaxValue>100</MaxValue>
+
+            <CriticalLevel>0.745</CriticalLevel>
+            <CriticalLevelDamageChance>1</CriticalLevelDamageChance>
+            <CriticalLevelDamageAmount>2</CriticalLevelDamageAmount>
+            <DamageLevel>1.0</DamageLevel>
+            <DamageLevelDamageAmount>10</DamageLevelDamageAmount>
+            <DecayWhenNotAffected>0.694</DecayWhenNotAffected>
+        </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_RadiationImmunityStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>SpaceCharacterRadiationImmunity</SubtypeId>
+            </Id>
+            <Name>RadiationImmunity</Name>
+            <MinValue>0</MinValue>
+            <DefaultValue>0</DefaultValue>
+            <MaxValue>100</MaxValue>
+
+            <Decay>0.278</Decay>
+        </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_FoodStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
+                <SubtypeId>SpaceCharacterFood</SubtypeId>
+            </Id>
+            <Name>Food</Name>
+            <MinValue>0</MinValue>
+            <DefaultValue>100</DefaultValue>
+            <MaxValue>100</MaxValue>
+            <ReducedOnSpawnValue>20</ReducedOnSpawnValue>
+
+            <DecayRate>0.062</DecayRate>
+            <CriticalLevel>0.2</CriticalLevel>
+            <MovementSpeedDebuff>-0.01</MovementSpeedDebuff>
+            <EnableSprintingOnCritical>false</EnableSprintingOnCritical>
+            <DamageLevel>0</DamageLevel>
+            <Damage>7</Damage>
+            <EnableInCreative>false</EnableInCreative>
+        </Stat>
+        <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+            <Id>
+                <TypeId>MyObjectBuilder_EntityStat</TypeId>
                 <SubtypeId>EnergyBottles</SubtypeId>
             </Id>
             <Name>EnergyBottles</Name>

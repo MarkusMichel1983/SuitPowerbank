@@ -16,7 +16,7 @@
             </Prerequisites>
             <Result Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank" />
             <BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
-            <IsPrimary>true</IsPrimary>
+            <IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
         </Blueprint>
         
         <!-- SuitPowerbank T1-->
@@ -28,14 +28,12 @@
             <DisplayName>Enhanced Suit Powerbank</DisplayName>
             <Icon>Textures\GUI\Icons\Item\SuitPowerbank_1.dds</Icon>
             <Prerequisites>
-                <Item Amount="200" TypeId="Ingot" SubtypeId="Iron" />
-                <Item Amount="75" TypeId="Ingot" SubtypeId="Nickel" />
-                <Item Amount="75" TypeId="Ingot" SubtypeId="Silicon" />
+                <Item Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank" />
                 <Item Amount="25" TypeId="Ingot" SubtypeId="Cobalt" />  
             </Prerequisites>
             <Result Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank_1" />
-            <BaseProductionTimeInSeconds>45</BaseProductionTimeInSeconds>
-            <IsPrimary>true</IsPrimary>
+            <BaseProductionTimeInSeconds>15</BaseProductionTimeInSeconds>
+            <IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
         </Blueprint>
         
         <!-- SuitPowerbank T2-->
@@ -47,16 +45,13 @@
             <DisplayName>Proficient Suit Powerbank</DisplayName>
             <Icon>Textures\GUI\Icons\Item\SuitPowerbank_2.dds</Icon>
             <Prerequisites>
-                <Item Amount="250" TypeId="Ingot" SubtypeId="Iron" />
-                <Item Amount="100" TypeId="Ingot" SubtypeId="Nickel" />
-                <Item Amount="75" TypeId="Ingot" SubtypeId="Silicon" />
-                <Item Amount="50" TypeId="Ingot" SubtypeId="Cobalt" />  
+                <Item Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank_1" />
                 <Item Amount="50" TypeId="Ingot" SubtypeId="Silver" /> 
                 <Item Amount="25" TypeId="Ingot" SubtypeId="Gold" />                
             </Prerequisites>
             <Result Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank_2" />
-            <BaseProductionTimeInSeconds>60</BaseProductionTimeInSeconds>
-            <IsPrimary>true</IsPrimary>
+            <BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
+            <IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
         </Blueprint>
         <!-- SuitPowerbank T3-->
         <Blueprint>
@@ -67,17 +62,12 @@
             <DisplayName>Elite Suit Powerbank</DisplayName>
             <Icon>Textures\GUI\Icons\Item\SuitPowerbank_3.dds</Icon>
             <Prerequisites>
-                <Item Amount="300" TypeId="Ingot" SubtypeId="Iron" />
-                <Item Amount="125" TypeId="Ingot" SubtypeId="Nickel" />
-                <Item Amount="100" TypeId="Ingot" SubtypeId="Silicon" />
-                <Item Amount="75" TypeId="Ingot" SubtypeId="Cobalt" />  
-                <Item Amount="100" TypeId="Ingot" SubtypeId="Silver" /> 
-                <Item Amount="100" TypeId="Ingot" SubtypeId="Gold" /> 
+                <Item Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank_2" />
                 <Item Amount="50" TypeId="Ingot" SubtypeId="Platinum" />                
             </Prerequisites>
             <Result Amount="1" TypeId="OxygenContainerObject" SubtypeId="SuitPowerbank_3" />
-            <BaseProductionTimeInSeconds>90</BaseProductionTimeInSeconds>
-            <IsPrimary>true</IsPrimary>
+            <BaseProductionTimeInSeconds>30</BaseProductionTimeInSeconds>
+            <IgnoreEfficiencyMultiplier>true</IgnoreEfficiencyMultiplier>
         </Blueprint>
    </Blueprints>
 </Definitions>
