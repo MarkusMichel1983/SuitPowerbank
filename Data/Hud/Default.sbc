@@ -2263,7 +2263,8 @@
                         </ColorMask>
 
                     </StatStyle>
-                <!--Energy Bottles-->
+                    
+<!--Energy Bottles-->
 
                     <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
                         <OffsetPx>
@@ -2364,7 +2365,7 @@
                             <Z>0.9647058823529412</Z>
                             <W>1</W>
                         </ColorMask>
-                    </StatStyle>
+                    </StatStyle>                    
  
             <!-- OXYGEN ............................................................................... -->
                     <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
@@ -3134,6 +3135,109 @@
                         </ColorMask>
 
                     </StatStyle>
+                    <!--Energy Bottles-->
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>74</X>
+                            <Y>-114</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>0.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>97</X>
+                            <Y>-114</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>1.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>122</X>
+                            <Y>-114</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>18</X>
+                            <Y>6</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>2.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>Bottle</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+
+                    </StatStyle>
+
+                    <StatStyle xsi:type="MyObjectBuilder_ImageStatVisualStyle">
+                        <OffsetPx>
+                            <X>141</X>
+                            <Y>-116</Y>
+                        </OffsetPx>
+                        <SizePx>
+                            <X>11</X>
+                            <Y>11</Y>
+                        </SizePx>
+
+                        <VisibleCondition xsi:type="StatCondition">
+                            <StatId>player_energy_bottles</StatId>
+                            <Value>3.0</Value>
+                            <Operator>Above</Operator>
+                        </VisibleCondition>
+
+                        <Texture>HealthIcon</Texture>
+                        <ColorMask>
+                            <X>0.734375</X>
+                            <Y>0.9137254901960784</Y>
+                            <Z>0.9647058823529412</Z>
+                            <W>1</W>
+                        </ColorMask>
+                    </StatStyle>
+
 
 			<!-- OXYGEN (Classic Hud Style)........................................................ -->
                     <StatStyle xsi:type="MyObjectBuilder_ProgressBarStatVisualStyle">
